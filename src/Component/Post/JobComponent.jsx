@@ -5,10 +5,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 const JobComponent = (props) => {
   const job = props.job;
 
-  // Static categories (you can replace these with dynamic values if needed)
   const categories = job.category;
-
-  console.log('job ->', job);
 
   return (
     <div>

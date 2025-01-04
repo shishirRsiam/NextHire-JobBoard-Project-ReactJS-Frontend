@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const [formData, setFormData] = useState({
     first_name: "Sample", last_name: "Siam", username: "shishir", email: "shishir.siam01@gmail.com", 
     password: "123456", confirm_password: "123456",
-    role: "Employer", company_name: "JS Company",
+    role: "", company_name: "JS Company",
     terms_conditions: true,
   });
 

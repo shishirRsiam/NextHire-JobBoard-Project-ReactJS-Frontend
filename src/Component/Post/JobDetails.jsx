@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import LoadingPage from "../Authentication/LoadingPage";
 import NotFoundPage from "../Authentication/NotFoundPage";
 import API from "../Authentication/API";
 import { motion } from "framer-motion";
 import ApplicationForm from "./ApplicationForm";
+import SuggestComponent from "./SuggestComponent";
+
+
 
 const JobDetails = () => {
+  const [suggestedJobs, setSuggestedJobs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { jobId } = useParams();
   const [job, setJob] = useState(null);
@@ -40,14 +44,11 @@ const JobDetails = () => {
           }),
         });
 
-
         if (!response.ok) {
-          throw new Error(await response.text()); // Log error response
+          throw new Error(await response.text()); 
         }
 
         const data = await response.json();
-        console.log('Fetch Successful:', data);
-
         setButtonName(data.button_name);
         setCanApply(data.can_apply);
       } catch (error) {
@@ -70,6 +71,29 @@ const JobDetails = () => {
         console.error("Error fetching job:", error);
       }
     };
+    const fetchSuggest = async () => {
+      console.log('-> fetchSuggest');
+      try {
+        const response = await fetch(`http://localhost:8000/api/job/suggested/`, {
+          method: "GET",
+          headers: {
+            Authorization: `${localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify()
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error('Something went wrong!');
+        }
+        console.log('Suggest Data ->', data);
+        setSuggestedJobs(data);
+      }
+      catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchSuggest();
     fetchJob();
     fetchApply();
   }, [jobId]);
@@ -86,8 +110,8 @@ const JobDetails = () => {
   return (
     <motion.div
       className="bg-gradient-to-b from-gray-50 to-gray-200 py-12"
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}>
       <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden">
         <motion.div
@@ -121,13 +145,13 @@ const JobDetails = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}>
             <button className={`w-3xl sm:w-auto py-3 px-6 rounded-full shadow-lg transform transition-transform duration-300 ${canApply
-                  ? "bg-gradient-to-r from-pink-500 to-red-500 text-white hover:scale-105 hover:shadow-xl"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"} flex items-center justify-center gap-2`}
+              ? "bg-gradient-to-r from-pink-500 to-red-500 text-white hover:scale-105 hover:shadow-xl"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"} flex items-center justify-center gap-2`}
               onClick={() => canApply && handleOpenModal()}
               disabled={!canApply}>
               {buttonName}
             </button>
-            {isModalOpen && <ApplicationForm  handleCloseModal={handleCloseModal} isModalOpen={isModalOpen} jobId={jobId} />}
+            {isModalOpen && <ApplicationForm handleCloseModal={handleCloseModal} isModalOpen={isModalOpen} jobId={jobId} />}
             <p
               className="text-sm sm:mt-1 text-gray-600 font-medium transition-opacity duration-500"
               style={{ opacity: fetchedData.total_applicants ? 1 : 0.7 }}>
@@ -137,9 +161,15 @@ const JobDetails = () => {
               Applicants
             </p>
           </motion.div>
-
         </div>
       </div>
+      <p className="max-w-sm mt-10 mx-auto text-2xl font-semibold text-gray-800">Suggestions For You</p>
+      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {suggestedJobs.map((job) => (
+          <SuggestComponent key={job.id} job={job} />
+        ))}
+      </div>
+
     </motion.div>
   );
 };

@@ -10,6 +10,7 @@ const UserProfile = (props) => {
     const defaultProfilePic = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
     
     const user = props.user;
+    const jobsPosted = props.postedData;
     const jobsApplied = props.jobsApplied;
 
     const toggleModal = () => {
@@ -17,6 +18,7 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
+        console.log('UserProfile props ->', props);
         window.scrollTo(0, 0);
         // setJobsApplied(props.jobsApplied);
     }, [])
@@ -69,8 +71,7 @@ const UserProfile = (props) => {
                             </p>
                         )}
                         {/* Skills and Interests Section */}
-                        <motion.div
-                            className="mt-6"
+                        <motion.div className="mt-6"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.9, delay: 0.6 }}>
@@ -93,7 +94,7 @@ const UserProfile = (props) => {
                 </div>
 
                 {/* Jobs Applied Section */}
-                <JobAppliedComponent jobsApplied={jobsApplied} />
+                <JobAppliedComponent jobsApplied={jobsApplied} user={user} postedData={jobsPosted}/>
                 
                 {/* Edit Profile Modal */}
                 <EditProfileModal isOpen={isModalOpen} toggleModal={toggleModal} user={user}/>

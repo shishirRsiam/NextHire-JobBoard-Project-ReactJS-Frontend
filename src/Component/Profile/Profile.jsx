@@ -8,6 +8,7 @@ const ProfilePage = (props) => {
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
     const [jobsApplied, setJobsApplied] = useState([]);
+    const [jobsPosted, setJobsPosted] = useState([]);
 
     const fetchUser = async () => {
         try {
@@ -25,9 +26,11 @@ const ProfilePage = (props) => {
             }
         
             const data = await response.json();
+            console.log("Auth API Response:", data);
         
             setUser(data.userData);
             setJobsApplied(data.appliedData);
+            setJobsPosted(data.postedData);
             setLoading(false);
         } catch (error) {
             console.log("Error fetching user:", error);
@@ -49,7 +52,7 @@ const ProfilePage = (props) => {
             {loading ? (
                 <LoadingPage />
             ) : (
-                <UserProfile user={user} jobsApplied={jobsApplied} />
+                <UserProfile user={user} jobsApplied={jobsApplied} postedData={jobsPosted}/>
             )}
         </>
     );

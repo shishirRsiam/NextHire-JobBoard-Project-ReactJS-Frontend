@@ -9,8 +9,7 @@ const JobAppliedComponent = (props) => {
     const jobsApplied = props.jobsApplied;
     const Data = (user.role === "Employer" ? postedData : jobsApplied);
     useEffect(() => {
-        console.log('Data ->', Data);
-        console.log('props ->', props);
+        
     }, []);
     return (
         <>

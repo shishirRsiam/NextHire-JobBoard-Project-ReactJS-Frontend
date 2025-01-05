@@ -21,7 +21,6 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
         const response = await fetch("http://localhost:8000/api/categories/");
         const data = await response.json();
         setAllSkills(data);
-        console.log('All Skills data ->', data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -85,14 +84,10 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
     const value = e.target.value;
     setNewSkill(value);
 
-    console.log('value ->', value);
-
     if (value.trim()) {
       const filteredSuggestions = allSkills.filter((skill) => {
-        console.log('skill ->', skill.name, 'value ->', value);
         return skill.name.toLowerCase().includes(value);
       });
-      console.log('filteredSuggestions ->', filteredSuggestions);
       // Uncomment this to set suggestions dynamically
       setSuggestions(filteredSuggestions);
     } else {
@@ -106,18 +101,15 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      console.log('newSkill ->', newSkill);
     }
   };
 
   const handleSave = () => {
     ProccessingSwalAlert();
-    console.log({ skills, resume, bio });
     fetchUpdatedUserData();
   };
 
   const selectSuggestion = (suggestedSkill) => {
-    console.log('suggestedSkill ->', suggestedSkill);
     if (!skills.some(skill => skill.id === suggestedSkill.id)) {
       // If it's not already added, add it to the skills array
       setSkills([...skills, suggestedSkill]);
@@ -127,7 +119,6 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
   };
 
   const handleCheckAllReadyAdded = (suggestion) => {
-    console.log('suggestion ->', suggestion);
     return skills.some((skill) => skill.name === suggestion.name);
   }
   const handleCreateButton = () => {

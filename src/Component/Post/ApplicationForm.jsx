@@ -52,8 +52,6 @@ const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
                 handleCloseModal(false)
                 ProccessingSwalAlert();
                 fetchApply(event.target);
-                console.log("Application submitted!");
-                console.log("Description:", event.target.description.value);
                 event.target.reset();
             }
         });

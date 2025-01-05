@@ -26,7 +26,6 @@ const ProfilePage = (props) => {
             }
         
             const data = await response.json();
-            console.log("Auth API Response:", data);
         
             setUser(data.userData);
             setJobsApplied(data.appliedData);

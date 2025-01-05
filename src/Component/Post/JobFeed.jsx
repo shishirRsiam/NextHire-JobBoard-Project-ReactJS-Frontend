@@ -26,7 +26,6 @@ const JobFeed = () => {
 
   const fetchFilteredPosts = async () => {
     const api = `${API.AddPostAPI}?searchByApplied=${searchByApplied}&searchByProfile=${searchByProfile}`;
-    console.log(api);
     try {
       const response = await fetch(api, {
         method: 'GET',
@@ -45,7 +44,6 @@ const JobFeed = () => {
 
   useEffect(() => {
     fetchFilteredPosts();
-    console.log('searchByApplied ->', searchByApplied, 'searchByProfile ->', searchByProfile);
   }, [searchByApplied, searchByProfile]);
 
   useEffect(() => {

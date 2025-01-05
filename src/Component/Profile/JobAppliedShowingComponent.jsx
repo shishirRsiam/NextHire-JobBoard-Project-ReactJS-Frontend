@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 const JobAppliedShowingComponent = (props) => {
     const jobsApplied = props.jobsApplied;
     useEffect(() => {
-        console.log('jobsApplied ->', jobsApplied);
+        // console.log('jobsApplied ->', jobsApplied);
     })
     return (
         <>

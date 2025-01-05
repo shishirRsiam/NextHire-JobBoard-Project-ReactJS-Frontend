@@ -9,12 +9,9 @@ import API from "../Authentication/API";
 const JobPostedShowingComponent = (props) => {
     const jobsPosted = props.jobsPosted;
     useEffect(() => {
-        console.log('jobsPosted ->', jobsPosted);
     })
 
     const fetchDelete = async (jobId) => {
-        console.log('-> fetchDelete', `${API.AddPostAPI}${jobId - 1552004}/?is_delete=1`);
-
         try {
             const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_delete=1`);
             const data = await response.json();
@@ -22,14 +19,12 @@ const JobPostedShowingComponent = (props) => {
                 throw new Error('Something went wrong!');
             }
             SuccessSwalAlert({ title: data.title, text: data.message, next_url: '/profile/' });
-            console.log('Fetch Delete ->', data);
         } catch (error) {
             console.error("Error fetching job:", error);
         }
     }
 
     const handleDeleteJob = (jobId) => {
-        console.log('jobId ->', jobId);
 
         Swal.fire({
             title: "Are you sure?",

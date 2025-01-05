@@ -59,7 +59,6 @@ const JobDetails = () => {
       }
     };
     const fetchJob = async () => {
-      console.log('-> fetchJob', `${API.AddPostAPI}${jobId - 1552004}/`);
       try {
         const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/`);
         const data = await response.json();
@@ -75,7 +74,6 @@ const JobDetails = () => {
       }
     };
     const fetchSuggest = async () => {
-      console.log('-> fetchSuggest');
       try {
         const response = await fetch(`http://localhost:8000/api/job/suggested/`, {
           method: "GET",
@@ -89,7 +87,6 @@ const JobDetails = () => {
         if (!response.ok) {
           throw new Error('Something went wrong!');
         }
-        console.log('Suggest Data ->', data);
         setSuggestedJobs(data);
       }
       catch (error) {

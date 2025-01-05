@@ -45,10 +45,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       const updatedData = { ...prevData, [name]: value };
       return updatedData;
     });
-    // console.log('skills', skills);
     formData.category = { id: skills.map((skill) => skill.id) }
-    console.log('formData', formData);
-
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -60,7 +57,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     // formData.category = skills.map((skill) => skill.id);
     formData.category = skills.map((skill) => skill.id)
     const api = API.AddPostAPI;
-    console.log("Form Data:", formData);
 
     try {
       const response = await fetch(api, {
@@ -77,7 +73,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       }
 
       const data = await response.json();
-      console.log("API Response:", data);
 
       if (onSubmit) onSubmit(formData);
       alert("Job saved successfully!");
@@ -95,7 +90,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      console.log('-> fetchUser');
       try {
         const response = await fetch("http://localhost:8000/api/auth/?can_post=1", {
           method: "GET",
@@ -112,7 +106,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
 
         const data = await response.json();
         setCanPost(data.can_post);
-        console.log('data ->', data);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -166,14 +159,11 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     const value = e.target.value;
     setNewSkill(value);
 
-    console.log('value ->', value);
 
     if (value.trim()) {
       const filteredSuggestions = allSkills.filter((skill) => {
-        console.log('skill ->', skill.name, 'value ->', value);
         return skill.name.toLowerCase().includes(value);
       });
-      console.log('filteredSuggestions ->', filteredSuggestions);
       // Uncomment this to set suggestions dynamically
       setSuggestions(filteredSuggestions);
     } else {
@@ -185,13 +175,11 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      console.log('newSkill ->', newSkill);
     }
   };
 
 
   const selectSuggestion = (suggestedSkill) => {
-    console.log('suggestedSkill ->', suggestedSkill);
     if (!skills.some(skill => skill.id === suggestedSkill.id)) {
       // If it's not already added, add it to the skills array
       setSkills([...skills, suggestedSkill]);
@@ -199,7 +187,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
   };
 
   const handleCheckAllReadyAdded = (suggestion) => {
-    console.log('suggestion ->', suggestion);
     return skills.some((skill) => skill.name === suggestion.name);
   }
   const handleCreateButton = () => {

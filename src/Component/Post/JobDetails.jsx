@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import ErrorSwalAlert from "../SwalAlert/ErrorSwalAlert";
+import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
 import LoadingPage from "../Authentication/LoadingPage";
 import NotFoundPage from "../Authentication/NotFoundPage";
 import API from "../Authentication/API";
@@ -57,6 +59,7 @@ const JobDetails = () => {
       }
     };
     const fetchJob = async () => {
+      console.log('-> fetchJob', `${API.AddPostAPI}${jobId - 1552004}/`);
       try {
         const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/`);
         const data = await response.json();
@@ -97,7 +100,6 @@ const JobDetails = () => {
     fetchJob();
     fetchApply();
   }, [jobId]);
-
 
   if (error) {
     return <NotFoundPage />;

@@ -1,16 +1,53 @@
 import { motion } from "framer-motion";
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
+import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
+import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
+import API from "../Authentication/API";
 
 const JobPostedShowingComponent = (props) => {
     const jobsPosted = props.jobsPosted;
     useEffect(() => {
         console.log('jobsPosted ->', jobsPosted);
     })
-    // return (
-    //     <div className="job-posted-showing-component">  ADD </div>
-    // );
+
+    const fetchDelete = async (jobId) => {
+        console.log('-> fetchDelete', `${API.AddPostAPI}${jobId - 1552004}/?is_delete=1`);
+
+        try {
+            const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_delete=1`);
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error('Something went wrong!');
+            }
+            SuccessSwalAlert({ title: data.title, text: data.message, next_url: '/profile/' });
+            console.log('Fetch Delete ->', data);
+        } catch (error) {
+            console.error("Error fetching job:", error);
+        }
+    }
+
+    const handleDeleteJob = (jobId) => {
+        console.log('jobId ->', jobId);
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure to Detete this job?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Delete",
+            cancelButtonText: "No, Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ProccessingSwalAlert();
+                fetchDelete(jobId);
+            }
+        });
+    };
+
+    
+
     return (
         <>
             <motion.div className="mb-10"
@@ -47,10 +84,10 @@ const JobPostedShowingComponent = (props) => {
                                         className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
                                         Edit Post
                                     </Link>
-                                    <Link to={`/job/${job.id + 1552004}/delete`}
+                                    <button onClick={() => handleDeleteJob(job.id + 1552004)}
                                         className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-200">
                                         Delete Post
-                                    </Link>
+                                    </button>
                                     <Link to={`/job/${job.id + 1552004}/applications`}
                                         className="bg-orange-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition duration-200">
                                         View Application

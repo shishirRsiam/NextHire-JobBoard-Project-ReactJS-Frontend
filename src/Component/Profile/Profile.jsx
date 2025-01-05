@@ -39,7 +39,6 @@ const ProfilePage = (props) => {
 
     useEffect(() => {
         console.log("Token:", localStorage.getItem("authToken"));
-        console.log('Props:', props);
         // setUser(props.user);
         // setLoading(false);
         // console.log('User:', user);

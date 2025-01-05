@@ -28,7 +28,6 @@ const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
             }
 
             const data = await response.json();
-            console.log('Fetch Successful:', data);
             SuccessSwalAlert({
                 title: data.title,
                 text: data.message,

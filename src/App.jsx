@@ -14,7 +14,7 @@ import LoadingPage from './Component/Authentication/LoadingPage';
 import JobFeed from './Component/Post/JobFeed';
 import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';
-
+import ViewApplication from './Component/Post/ViewApplication';
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/404" element={<NotFoundPage />} />
+        <Route path="/job/:jobId/applications" element={<ViewApplication />} />
         <Route path="/login/" element={<LoginPage />} />
         <Route path="/register/" element={<RegisterPage />} />
         <Route path="/feed/" element={<JobFeed />} />

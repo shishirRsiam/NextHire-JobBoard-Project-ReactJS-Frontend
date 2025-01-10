@@ -18,9 +18,7 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
-        // console.log('UserProfile props ->', props);
         window.scrollTo(0, 0);
-        // setJobsApplied(props.jobsApplied);
     }, [])
 
     return (

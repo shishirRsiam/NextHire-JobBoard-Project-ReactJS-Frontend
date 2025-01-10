@@ -11,9 +11,9 @@ const JobPostedShowingComponent = (props) => {
     useEffect(() => {
     })
 
-    const fetchDelete = async (jobId) => {
+    const fetchDelete = async (job) => {
         try {
-            const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_delete=1`);
+            const response = await fetch(`${API.AddPostAPI}${job.id}/?is_delete=1`);
             const data = await response.json();
             if (!response.ok) {
                 throw new Error('Something went wrong!');
@@ -24,11 +24,10 @@ const JobPostedShowingComponent = (props) => {
         }
     }
 
-    const handleDeleteJob = (jobId) => {
-
+    const handleDeleteJob = (job) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "Are you sure to Detete this job?",
+            text: `Are you sure to Detete '${job.title}' job?`,
             icon: "question",
             showCancelButton: true,
             confirmButtonText: "Yes, Delete",
@@ -36,11 +35,10 @@ const JobPostedShowingComponent = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 ProccessingSwalAlert();
-                fetchDelete(jobId);
+                fetchDelete(job);
             }
         });
     };
-
     
 
     return (
@@ -79,7 +77,7 @@ const JobPostedShowingComponent = (props) => {
                                         className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
                                         Edit Post
                                     </Link>
-                                    <button onClick={() => handleDeleteJob(job.id + 1552004)}
+                                    <button onClick={() => handleDeleteJob(job)}
                                         className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-200">
                                         Delete Post
                                     </button>

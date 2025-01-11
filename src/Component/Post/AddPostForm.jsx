@@ -3,6 +3,10 @@ import API from "../Authentication/API";
 import { motion } from "framer-motion";
 import LoadingPage from "../Authentication/LoadingPage";
 import NotFoundPage from "../Authentication/NotFoundPage";
+import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
+import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
+import ErrorSwalAlert from "../SwalAlert/ErrorSwalAlert";
+
 
 const JobPostForm = ({ existingJob, onSubmit }) => {
   const [formData, setFormData] = useState(
@@ -17,7 +21,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       category: '',
     }
   );
-  // skills component
 
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -57,6 +60,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     // formData.category = skills.map((skill) => skill.id);
     formData.category = skills.map((skill) => skill.id)
     const api = API.AddPostAPI;
+    ProccessingSwalAlert();
 
     try {
       const response = await fetch(api, {
@@ -69,15 +73,17 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       });
 
       if (!response.ok) {
+        ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form'});
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
 
       if (onSubmit) onSubmit(formData);
-      alert("Job saved successfully!");
+      SuccessSwalAlert({ title: 'Success', text: 'Job posted successfully.', next_url: '/profile/' });
     } catch (error) {
       console.error("Error submitting form:", error);
+      ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form'});
       alert("Failed to save the job. Please try again.");
     }
   };
@@ -138,7 +144,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
         }),
       });
       if (!response.ok) {
-        
         console.error("Failed to create new skill:", skill);
       }
       const data = await response.json();

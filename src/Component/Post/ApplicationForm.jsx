@@ -5,6 +5,7 @@ import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
 import ErrorSwalAlert from "../SwalAlert/ErrorSwalAlert";
 import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
 
+
 const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
     const fetchApply = async (event) => {
         try {
@@ -36,6 +37,11 @@ const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
 
         } catch (error) {
             console.error('Fetch Apply Error:', error);
+            ErrorSwalAlert({
+                icon: "warning",
+                title: "Resume Required",
+                text: "Please upload your resume in your profile before applying for jobs.",
+            });
         }
     };
     const handleSubmit = (event) => {

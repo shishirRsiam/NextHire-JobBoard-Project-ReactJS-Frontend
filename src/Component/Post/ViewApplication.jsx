@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import LoadingPage from "../Authentication/LoadingPage";
 import API from "../Authentication/API";
 
-
+import ViewJobsApplication from "./ViewJobApplication";
 
 
 const ViewApplication = () => {
     const { jobId } = useParams();
     const [loading, setLoading] = useState(true);
+    const [jobPost, setJobPost] = useState(null);
     const [applications, setApplications] = useState([]);
 
     useEffect(() => {
@@ -17,6 +18,8 @@ const ViewApplication = () => {
                 const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_application=1`);
                 const data = await response.json();
                 console.log('fetchApplications ->', data);
+                setJobPost(data.job_post);
+                setApplications(data.application);
                 // setApplications(data.applications);
                 setLoading(false);
             } catch (error) {
@@ -35,7 +38,9 @@ const ViewApplication = () => {
     if (loading) return <LoadingPage />
 
     return (
-        <div>jobId {jobId} ViewApplication</div>
+        <>
+            <ViewJobsApplication jobPost={jobPost} applications={applications} />
+        </>
     )
 }
 

@@ -16,6 +16,8 @@ import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';
 import ViewApplication from './Component/Post/ViewApplication';
 import EditPostForm from './Component/Post/EditPostForm';
+import SettingsPage from './Component/Setting/SettingPage';
+
 
 function App() {
   return (
@@ -29,7 +31,8 @@ function App() {
         <Route path="/register/" element={<RegisterPage />} />
         <Route path="/feed/" element={<JobFeed />} />
         <Route path="/job/:jobId/" element={<JobDetails />} />
-        <Route path="/settings/" element={<LoadingPage />} />
+        <Route path="/settings/" element={<SettingsPage />} />
+        {/* <Route path="/settings/" element={<LoadingPage />} /> */}
         <Route path="/about/" element={<LoadingPage />} />
         <Route path="/profile/" element={<ProfilePage />} />
         <Route path="/add/post/" element={<AddPostForm />} />

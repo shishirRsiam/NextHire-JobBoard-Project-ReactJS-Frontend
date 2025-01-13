@@ -58,6 +58,9 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                                 <h4 className="text-xl font-bold text-gray-800">
                                     Applicant: {application.user.first_name} {application.user.last_name}
                                 </h4>
+                                <p className="text-sm text-gray-600 mt-2 ">
+                                    Applicant email: <p className="text-blue-600 underline inline font-bold">{application.user.email}</p>
+                                </p>
                                 <p className="text-sm text-gray-600 mt-2">
                                     Applied on: {new Date(application.created_at).toLocaleDateString()}
                                 </p>

@@ -16,7 +16,7 @@ import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';
 import ViewApplication from './Component/Post/ViewApplication';
 import EditPostForm from './Component/Post/EditPostForm';
-import SettingsPage from './Component/Setting/SettingPage';
+import SettingsPage from './Component/Settings/SettingPage';
 
 
 function App() {

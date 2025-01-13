@@ -5,6 +5,12 @@ import NotFoundPage from '../Authentication/NotFoundPage';
 import AccountSettings from './AccountSettings';
 import useAuth from '../Authentication/useAuth';
 import ProfileSettings from './ProfileSettings';
+import PrivacySettings from './PrivacySettings';
+import NotificationSettings from './NotificationSettings';
+import PreferencesSettings from './PreferencesSettings';
+import BillingSettings from './BillingSettings';
+
+
 
 const SettingsPage = () => {
   const [user, setUser] = useState(null);
@@ -43,18 +49,15 @@ const SettingsPage = () => {
   }, []);
 
 
-
   useEffect(() => {
     if (user) {
-      console.log('Updated user ->', user); // Log updated user
+      console.log('Updated user ->', user);
     }
   }, [user]);
 
 
   if (loading) return <LoadingPage />;
-
   if (!authenticated) return <NotFoundPage />;
-
 
   const tabs = [
     { id: 'profile', label: 'Profile' },
@@ -86,18 +89,12 @@ const SettingsPage = () => {
 
   return (
     <div className="settings-page  flex bg-gray-50 min-auto-screen">
-      {/* Sidebar Navigation */}
-      <motion.aside
-        className="ps-5 pb-10 w-1/4 bg-white shadow-lg p-4"
-        initial={{ x: -10 }}
-        animate={{ x: 0 }}
-        transition={{ duration: 2 }}
-      >
+      <motion.aside className="ps-5 pb-10 w-1/4 bg-white shadow-lg p-4"
+        initial={{ x: -10 }} animate={{ x: 0 }} transition={{ duration: 2 }} >
         <h2 className="text-lg font-semibold mb-4">Settings</h2>
         <ul className="space-y-2">
           {tabs.map((tab) => (
-            <motion.li
-              key={tab.id}
+            <motion.li key={tab.id}
               className={`p-3 rounded-lg cursor-pointer text-center font-medium relative ${activeTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'
                 }`}
               onClick={() => setActiveTab(tab.id)}
@@ -132,61 +129,5 @@ const SettingsPage = () => {
   );
 };
 
-
-const NotificationSettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Notification Settings</h2>
-    <div className="space-y-3">
-      <label className="flex items-center">
-        <input type="checkbox" className="mr-3" /> Enable Email Notifications
-      </label>
-      <label className="flex items-center">
-        <input type="checkbox" className="mr-3" /> Enable Push Notifications
-      </label>
-    </div>
-  </motion.div>
-);
-
-const PreferencesSettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Preferences</h2>
-    <div className="space-y-4">
-      <div>
-        <label className="block mb-1 font-medium">Theme</label>
-        <select className="w-full border p-3 rounded-lg">
-          <option>Light</option>
-          <option>Dark</option>
-        </select>
-      </div>
-      <div>
-        <label className="block mb-1 font-medium">Language</label>
-        <select className="w-full border p-3 rounded-lg">
-          <option>English</option>
-          <option>Spanish</option>
-          <option>French</option>
-        </select>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const BillingSettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Billing</h2>
-    <p className="mb-4">Current Plan: Free</p>
-    <button className="bg-green-500 text-white py-3 px-6 rounded-lg">Upgrade Plan</button>
-  </motion.div>
-);
-
-const PrivacySettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Privacy Settings</h2>
-    <div className="space-y-3">
-      <label className="flex items-center">
-        <input type="checkbox" className="mr-3" /> Share my data with third parties
-      </label>
-    </div>
-  </motion.div>
-);
 
 export default SettingsPage;

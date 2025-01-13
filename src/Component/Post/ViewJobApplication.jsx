@@ -62,7 +62,8 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                                     Applicant email: <p className="text-blue-600 underline inline font-bold">{application.user.email}</p>
                                 </p>
                                 <p className="text-sm text-gray-600 mt-2">
-                                    Applied on: {new Date(application.created_at).toLocaleDateString()}
+                                    Applied on: {new Date(application.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} - {new Date(application.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+
                                 </p>
                                 <div className="mt-4 text-sm">
                                     <p>{application.description}</p>

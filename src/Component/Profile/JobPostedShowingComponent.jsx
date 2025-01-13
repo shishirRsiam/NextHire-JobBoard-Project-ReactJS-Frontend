@@ -39,7 +39,7 @@ const JobPostedShowingComponent = (props) => {
             }
         });
     };
-    
+
 
     return (
         <>
@@ -73,7 +73,8 @@ const JobPostedShowingComponent = (props) => {
                                     <p className="text-xs text-gray-500 mt-1">Applied on: {new Date(job.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} - {new Date(job.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
                                 </div>
                                 <div className="flex gap-4">
-                                    <Link to={`/job/${job.id + 1552004}/edit`}
+                                    <Link to={{
+                                        pathname: "/edit/job/", }} state={{ existingJob: job }}
                                         className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
                                         Edit Post
                                     </Link>

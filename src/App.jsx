@@ -15,6 +15,7 @@ import JobFeed from './Component/Post/JobFeed';
 import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';
 import ViewApplication from './Component/Post/ViewApplication';
+import EditPostForm from './Component/Post/EditPostForm';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/about/" element={<LoadingPage />} />
         <Route path="/profile/" element={<ProfilePage />} />
         <Route path="/add/post/" element={<AddPostForm />} />
+        <Route path="/edit/job/" element={<EditPostForm />} />
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>
       <FooterComponent />

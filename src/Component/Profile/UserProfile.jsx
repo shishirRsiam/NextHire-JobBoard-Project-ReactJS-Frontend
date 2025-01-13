@@ -85,7 +85,7 @@ const UserProfile = (props) => {
                         </motion.div>
                         <div className="mt-6">
                             <button onClick={toggleModal} className="px-6 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all">
-                                Edit Profile
+                                Update Resume, Bio, Skills and Interests
                             </button>
                         </div>
                     </motion.div>

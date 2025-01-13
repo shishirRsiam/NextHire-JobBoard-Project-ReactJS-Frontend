@@ -2,19 +2,58 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import LoadingPage from '../Authentication/LoadingPage';
 import NotFoundPage from '../Authentication/NotFoundPage';
+import AccountSettings from './AccountSettings';
+import useAuth from '../Authentication/useAuth';
+import ProfileSettings from './ProfileSettings';
 
 const SettingsPage = () => {
   const [user, setUser] = useState(null);
+  const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
 
   useEffect(() => {
-    setLoading(false);
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/auth/", {
+          method: "GET",
+          headers: {
+            Authorization: `${localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Fetched user ->', data.userData); // Log fetched user
+        setUser(data.userData); // Update user state
+        setAuthenticated(true);
+      } catch (error) {
+        console.error("Fetch error:", error);
+        setAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
+
+
+
+  useEffect(() => {
+    if (user) {
+      console.log('Updated user ->', user); // Log updated user
+    }
+  }, [user]);
+
 
   if (loading) return <LoadingPage />;
 
-  if (!user) return <NotFoundPage />;
+  if (!authenticated) return <NotFoundPage />;
 
 
   const tabs = [
@@ -29,7 +68,7 @@ const SettingsPage = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'profile':
-        return <ProfileSettings />;
+        return <ProfileSettings user={user} />;
       case 'account':
         return <AccountSettings />;
       case 'notifications':
@@ -41,7 +80,7 @@ const SettingsPage = () => {
       case 'privacy':
         return <PrivacySettings />;
       default:
-        return <ProfileSettings />;
+        return <ProfileSettings user={user} />;
     }
   };
 
@@ -49,7 +88,7 @@ const SettingsPage = () => {
     <div className="settings-page  flex bg-gray-50 min-auto-screen">
       {/* Sidebar Navigation */}
       <motion.aside
-        className="pb-10 w-1/4 bg-white shadow-lg p-4"
+        className="ps-5 pb-10 w-1/4 bg-white shadow-lg p-4"
         initial={{ x: -10 }}
         animate={{ x: 0 }}
         transition={{ duration: 2 }}
@@ -93,30 +132,6 @@ const SettingsPage = () => {
   );
 };
 
-// Individual Tab Components
-const ProfileSettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
-    <form className="space-y-4">
-      <div>
-        <label className="block mb-1 font-medium">Name</label>
-        <input type="text" className="w-full border p-3 rounded-lg" placeholder="Enter your name" />
-      </div>
-      <div>
-        <label className="block mb-1 font-medium">Email</label>
-        <input type="email" className="w-full border p-3 rounded-lg" placeholder="Enter your email" />
-      </div>
-      <button type="submit" className="bg-blue-500 text-white py-3 px-6 rounded-lg">Save</button>
-    </form>
-  </motion.div>
-);
-
-const AccountSettings = () => (
-  <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Account Settings</h2>
-    <button className="bg-red-500 text-white py-3 px-6 rounded-lg">Delete Account</button>
-  </motion.div>
-);
 
 const NotificationSettings = () => (
   <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>

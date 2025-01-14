@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const PreferencesSettings = () => (
   <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-    <h2 className="text-2xl font-bold mb-6">Preferences</h2>
+    <h2 className="text-2xl font-bold mb-6">Preferences (ShowCase)</h2>
     <div className="space-y-4">
       <div>
         <label className="block mb-1 font-medium">Theme</label>

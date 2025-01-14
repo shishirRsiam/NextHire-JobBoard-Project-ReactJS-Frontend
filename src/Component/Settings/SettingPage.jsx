@@ -53,8 +53,7 @@ const SettingsPage = () => {
   if (!authenticated) return <NotFoundPage />;
 
   const tabs = [
-    { id: 'profile', label: 'Profile' },
-    { id: 'account', label: 'Account' },
+    { id: 'profile', label: 'Profile & Account' },
     { id: 'notifications', label: 'Notifications' },
     { id: 'preferences', label: 'Preferences' },
     { id: 'billing', label: 'Billing' },
@@ -65,8 +64,6 @@ const SettingsPage = () => {
     switch (activeTab) {
       case 'profile':
         return <ProfileSettings user={user} fetchUser={fetchUser} />;
-      case 'account':
-        return <AccountSettings />;
       case 'notifications':
         return <NotificationSettings />;
       case 'preferences':

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 import { toast } from 'react-toastify';
+import AccountSettings from './AccountSettings';
 
-const ProfileSettings = ({ user, fetchUser}) => {
+const ProfileSettings = ({ user, fetchUser }) => {
     const [formData, setFormData] = useState({
         username: user?.user?.username || '',
         first_name: user?.user?.first_name || '',
@@ -23,11 +24,14 @@ const ProfileSettings = ({ user, fetchUser}) => {
 
     // Toggle readonly state
     const toggleEditable = () => {
-        if (!isEditable) {
-            toast.success('Fields are now editable.');
-        }
         setIsEditable((prev) => !prev);
+        if (!isEditable) {
+            toast.success('You can now Edit Your information');
+        } else {
+            toast.error('You are in View Mode');
+        }
     };
+
 
     // Handle form submission
     const handleSubmit = (e) => {
@@ -117,6 +121,7 @@ const ProfileSettings = ({ user, fetchUser}) => {
                     Update Profile
                 </button>
             </form>
+            <AccountSettings />
         </motion.div>
     );
 };

@@ -60,7 +60,7 @@ const AccountSettings = () => {
 
     return (
         <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className="text-2xl font-bold">Account Settings</h2>
+            <h2 className="text-2xl font-bold mt-12">Account Settings</h2>
 
             <div className="space-x-8 flex">
                 {/* Reset Password Button */}

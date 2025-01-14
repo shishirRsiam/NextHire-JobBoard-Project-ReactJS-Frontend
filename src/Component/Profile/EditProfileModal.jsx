@@ -37,6 +37,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          resone: 'userProfile',
           skill: skills.map((skill) => skill.id),
           resume: resume,
           bio: bio,

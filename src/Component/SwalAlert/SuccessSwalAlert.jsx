@@ -10,7 +10,7 @@ const SuccessSwalAlert = (props) => {
         confirmButtonColor: '#2e7d32',
         iconColor: '#2e7d32',
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && !no_next_url) {
             window.location.href = props.next_url || '/profile';
         }
     });

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
+
 
 const ProfileSettings = ({ user }) => {
     const [formData, setFormData] = useState({
@@ -21,7 +23,30 @@ const ProfileSettings = ({ user }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Updated User Data:', formData);
-        // Add your save logic here (e.g., send data to an API)
+        const fetchUpdatedUserData = async () => {
+            try {
+                const response = await fetch("http://localhost:8000/api/update/profile/", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `${localStorage.getItem("authToken")}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        resone: 'user',
+                        username: formData.username, 
+                        first_name: formData.first_name,
+                        last_name: formData.last_name,
+                    }),
+                });
+                if (!response.ok) {
+                    console.error("Failed to update user data");
+                }
+                SuccessSwalAlert({ text: 'Profile updated successfully.', no_next_url: true });
+            } catch (error) {
+                console.error("Error updating user data:", error);
+            }
+        };
+        fetchUpdatedUserData();
     };
 
     return (
@@ -64,9 +89,13 @@ const ProfileSettings = ({ user }) => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="bg-blue-500 text-white py-3 px-6 rounded-lg">
+                <button
+                    type="submit"
+                    className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300"
+                >
                     Save
                 </button>
+
             </form>
         </motion.div>
     );

@@ -46,13 +46,6 @@ const SettingsPage = () => {
     };
 
     fetchUser();
-  }, []);
-
-
-  useEffect(() => {
-    if (user) {
-      console.log('Updated user ->', user);
-    }
   }, [user]);
 
 
@@ -102,8 +95,7 @@ const SettingsPage = () => {
                 scale: 1.05,
                 rotate: 1,
                 transition: { type: "spring", stiffness: 200 }
-              }}
-            >
+              }}>
               {tab.label}
             </motion.li>
           ))}

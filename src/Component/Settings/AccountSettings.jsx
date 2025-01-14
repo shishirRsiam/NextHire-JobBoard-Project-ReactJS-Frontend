@@ -1,59 +1,73 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Swal from "sweetalert2";
+import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
+import { a } from 'framer-motion/client';
+import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 
-// Placeholder function for sending email (replace it with actual integration like EmailJS, SendGrid, etc.)
-const sendEmailNotification = (email, action) => {
-    // Here you can integrate with an email service like EmailJS, SendGrid, etc.
-    console.log(`Email notification for ${action} sent to: ${email}`);
-    alert(`Notification for ${action} has been sent to: ${email}`);
+const sendEmailNotification = async (email, action) => {
+    console.log(`Email notification for ${action} sent to: ${email}`); 
+    SuccessSwalAlert({
+        title: "Notification Sent",
+        text: `An email notification regarding "${action}" has been successfully sent to: ${email}`,
+        icon: "success",
+        confirmButtonText: "Okay",
+        confirmButtonColor: "#4CAF50",
+    });
 };
 
 const AccountSettings = () => {
-    const [email, setEmail] = useState('user@example.com'); // Example email, replace with actual user data
+    const [email, setEmail] = useState('user@example.com');
 
     const handleDeleteAccount = () => {
-        const confirmed = window.confirm('Are you sure you want to delete your account?');
-        if (confirmed) {
-            sendEmailNotification(email, 'account deletion');
-        }
+        Swal.fire({
+            title: "Are you sure to delete your account?",
+            text: "Once you delete your account, it cannot be recovered.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Delete",
+            cancelButtonText: "No, Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Important Information",
+                    text: "Please note that once an account is created, it cannot be deleted. We recommend proceeding with this understanding.",
+                    icon: "info",
+                    confirmButtonText: "Got It!",
+                    confirmButtonColor: "#3085d6", 
+                    iconColor: "#3498db", 
+                    background: "#f4f6f9", 
+                });
+            }
+        });
     };
 
-    const handleForgetPassword = () => {
-        const confirmed = window.confirm('Do you want to reset your password?');
-        if (confirmed) {
-            sendEmailNotification(email, 'password reset');
-        }
-    };
-
-    const handleChangePassword = () => {
-        const confirmed = window.confirm('Do you want to change your password?');
-        if (confirmed) {
-            sendEmailNotification(email, 'password change');
-        }
+    const handleResetPassword = () => {
+        Swal.fire({
+            title: "Are you sure to reset your password?",
+            text: "You will receive an email to reset your password.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Reset",
+            cancelButtonText: "No, Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // ProccessingSwalAlert();
+                sendEmailNotification(email, 'password reset');
+            }
+        });
     };
 
     return (
         <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
             <h2 className="text-2xl font-bold">Account Settings</h2>
 
-            <div className="space-x-4 flex">
-                {/* Forget Password Button */}
+            <div className="space-x-8 flex">
+                {/* Reset Password Button */}
                 <div className="mt-6">
-                    <button
-                        className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                        onClick={handleForgetPassword}
-                    >
-                        Forgot Password
-                    </button>
-                </div>
-
-                {/* Change Password Button */}
-                <div className="mt-6">
-                    <button
-                        className="bg-yellow-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-yellow-600 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                        onClick={handleChangePassword}
-                    >
-                        Change Password
+                    <button className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                        onClick={handleResetPassword}>
+                        Reset Password
                     </button>
                 </div>
 

@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Routes, Route } from 'react-router-dom';
 import NavbarComponent from './Component/Navbar/Navbar';
@@ -22,6 +24,9 @@ import SettingsPage from './Component/Settings/SettingPage';
 function App() {
   return (
     <>
+      <div>
+        <ToastContainer position="top-right" autoClose={3000} />
+      </div>
       <NavbarComponent />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -40,6 +45,7 @@ function App() {
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>
       <FooterComponent />
+
     </>
   );
 }

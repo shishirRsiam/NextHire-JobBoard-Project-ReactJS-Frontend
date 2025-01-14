@@ -18,35 +18,35 @@ const SettingsPage = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/auth/", {
-          method: "GET",
-          headers: {
-            Authorization: `${localStorage.getItem("authToken")}`,
-            "Content-Type": "application/json",
-          },
-        });
+  const fetchUser = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/auth/", {
+        method: "GET",
+        headers: {
+          Authorization: `${localStorage.getItem("authToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('Fetched user ->', data.userData); // Log fetched user
-        setUser(data.userData); // Update user state
-        setAuthenticated(true);
-      } catch (error) {
-        console.error("Fetch error:", error);
-        setAuthenticated(false);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
 
+      const data = await response.json();
+      console.log('Fetched user ->', data.userData); // Log fetched user
+      setUser(data.userData); // Update user state
+      setAuthenticated(true);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchUser();
-  }, [user]);
+  }, []);
 
 
   if (loading) return <LoadingPage />;
@@ -64,7 +64,7 @@ const SettingsPage = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'profile':
-        return <ProfileSettings user={user} />;
+        return <ProfileSettings user={user} fetchUser={fetchUser} />;
       case 'account':
         return <AccountSettings />;
       case 'notifications':
@@ -76,7 +76,7 @@ const SettingsPage = () => {
       case 'privacy':
         return <PrivacySettings />;
       default:
-        return <ProfileSettings user={user} />;
+        return <ProfileSettings user={user} fetchUser={fetchUser} />;
     }
   };
 

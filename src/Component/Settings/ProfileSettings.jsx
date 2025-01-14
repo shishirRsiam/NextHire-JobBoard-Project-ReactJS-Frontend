@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
+import { toast } from 'react-toastify';
 
-
-const ProfileSettings = ({ user }) => {
+const ProfileSettings = ({ user, fetchUser}) => {
     const [formData, setFormData] = useState({
         username: user?.user?.username || '',
         first_name: user?.user?.first_name || '',
         last_name: user?.user?.last_name || '',
     });
+
+    const [isEditable, setIsEditable] = useState(false);
 
     // Handle input change
     const handleChange = (e) => {
@@ -17,6 +19,14 @@ const ProfileSettings = ({ user }) => {
             ...prevData,
             [name]: value,
         }));
+    };
+
+    // Toggle readonly state
+    const toggleEditable = () => {
+        if (!isEditable) {
+            toast.success('Fields are now editable.');
+        }
+        setIsEditable((prev) => !prev);
     };
 
     // Handle form submission
@@ -33,7 +43,7 @@ const ProfileSettings = ({ user }) => {
                     },
                     body: JSON.stringify({
                         resone: 'user',
-                        username: formData.username, 
+                        username: formData.username,
                         first_name: formData.first_name,
                         last_name: formData.last_name,
                     }),
@@ -41,6 +51,7 @@ const ProfileSettings = ({ user }) => {
                 if (!response.ok) {
                     console.error("Failed to update user data");
                 }
+                fetchUser();
                 SuccessSwalAlert({ text: 'Profile updated successfully.', no_next_url: true });
             } catch (error) {
                 console.error("Error updating user data:", error);
@@ -51,51 +62,60 @@ const ProfileSettings = ({ user }) => {
 
     return (
         <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Profile Settings</h2>
+                <button onClick={toggleEditable} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
+                    {!isEditable ? 'Want to Edit Your Profile?' : 'Cancel'}
+                </button>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block mb-1 font-medium">Username</label>
                     <input
+                        required
                         name="username"
                         value={formData.username}
                         onChange={handleChange}
                         type="text"
-                        className="w-full border p-3 rounded-lg"
+                        readOnly={!isEditable}
+                        className={`w-full border p-3 rounded-lg ${isEditable ? 'bg-white' : 'bg-gray-100'}`}
                         placeholder="Enter your username"
                     />
                 </div>
-                {/* Flex container for First Name and Last Name */}
                 <div className="flex gap-4">
                     <div className="flex-1">
                         <label className="block mb-1 font-medium">First Name</label>
                         <input
+                            required
                             name="first_name"
                             value={formData.first_name}
                             onChange={handleChange}
                             type="text"
-                            className="w-full border p-3 rounded-lg"
+                            readOnly={!isEditable}
+                            className={`w-full border p-3 rounded-lg ${isEditable ? 'bg-white' : 'bg-gray-100'}`}
                             placeholder="Enter your first name"
                         />
                     </div>
                     <div className="flex-1">
                         <label className="block mb-1 font-medium">Last Name</label>
                         <input
+                            required
                             name="last_name"
                             value={formData.last_name}
                             onChange={handleChange}
                             type="text"
-                            className="w-full border p-3 rounded-lg"
+                            readOnly={!isEditable}
+                            className={`w-full border p-3 rounded-lg ${isEditable ? 'bg-white' : 'bg-gray-100'}`}
                             placeholder="Enter your last name"
                         />
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300"
-                >
-                    Save
+                <button type="submit"
+                    className={`bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 ${!isEditable && 'opacity-50 pointer-events-none'
+                        }`}
+                    disabled={!isEditable}>
+                    Update Profile
                 </button>
-
             </form>
         </motion.div>
     );

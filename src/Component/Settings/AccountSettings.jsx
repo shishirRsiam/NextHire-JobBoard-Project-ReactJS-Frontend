@@ -6,10 +6,24 @@ import { a } from 'framer-motion/client';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 
 const sendEmailNotification = async (email, action) => {
-    console.log(`Email notification for ${action} sent to: ${email}`); 
+    ProccessingSwalAlert();
+    // Send email notification
+    const api = 'http://localhost:8000/api/email/sent/?email_sent=reset_password'
+    const response = await fetch(`${api}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `${localStorage.getItem('authToken')}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify()
+    });
+    if(!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
     SuccessSwalAlert({
         title: "Notification Sent",
-        text: `An email notification regarding "${action}" has been successfully sent to: ${email}`,
+        text: `An email notification regarding "Password Reset" has been successfully sent to: ${data.user.email}`,
         icon: "success",
         confirmButtonText: "Okay",
         confirmButtonColor: "#4CAF50",
@@ -52,7 +66,6 @@ const AccountSettings = () => {
             cancelButtonText: "No, Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
-                // ProccessingSwalAlert();
                 sendEmailNotification(email, 'password reset');
             }
         });
@@ -73,16 +86,12 @@ const AccountSettings = () => {
 
                 {/* Delete Account Button */}
                 <div className="mt-6">
-                    <button
-                        className="bg-red-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-                        onClick={handleDeleteAccount}
-                    >
+                    <button className="bg-red-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                        onClick={handleDeleteAccount}>
                         Delete Account
                     </button>
                 </div>
             </div>
-
-
         </motion.div>
     );
 };

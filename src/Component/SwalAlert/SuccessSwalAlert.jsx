@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 
 const SuccessSwalAlert = (props) => {
+    console.log(props);
     Swal.fire({
         title: props.title || 'Success',
         text: props.text || 'Your request has been processed successfully.',
@@ -10,8 +11,8 @@ const SuccessSwalAlert = (props) => {
         confirmButtonColor: '#2e7d32',
         iconColor: '#2e7d32',
     }).then((result) => {
-        if (result.isConfirmed && !no_next_url) {
-            window.location.href = props.next_url || '/profile';
+        if (result.isConfirmed && props.next_url) {
+            window.location.href = props.next_url;
         }
     });
 };

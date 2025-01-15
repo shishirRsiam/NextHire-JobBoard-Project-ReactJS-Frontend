@@ -19,7 +19,7 @@ import AddPostForm from './Component/Post/AddPostForm';
 import ViewApplication from './Component/Post/ViewApplication';
 import EditPostForm from './Component/Post/EditPostForm';
 import SettingsPage from './Component/Settings/SettingPage';
-
+import ResetPassword from './Component/Password/ResetPassword';
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
       <NavbarComponent />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/accounts/password/reset/:uid/:token/" element={<ResetPassword />} />
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="/job/:jobId/applications" element={<ViewApplication />} />
         <Route path="/login/" element={<LoginPage />} />

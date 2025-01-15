@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { TEInput, TERipple } from 'tw-elements-react';
-
+import { Link } from 'react-router-dom';
 import API from './API';
 
 import ErrorSwalAlert from '../SwalAlert/ErrorSwalAlert';
@@ -87,8 +87,7 @@ const LoginPage = () => {
               {/* Remember me checkbox */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center">
-                  <input
-                    className="h-4 w-4 text-pink-500 border-gray-300 rounded"
+                  <input className="h-4 w-4 text-pink-500 border-gray-300 rounded"
                     type="checkbox"
                     id="exampleCheck3"
                     defaultChecked
@@ -98,13 +97,11 @@ const LoginPage = () => {
                   </label>
                 </div>
 
-                {/* Forgot password link */}
-                <a href="#!" className="text-purple-500 text-sm hover:text-purple-700">
+                <Link to="/forgot/password/" className="text-purple-500 text-sm hover:text-purple-700">
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
-              {/* Submit button */}
               <TERipple rippleColor="light" className="w-full">
                 <button
                   type="submit"

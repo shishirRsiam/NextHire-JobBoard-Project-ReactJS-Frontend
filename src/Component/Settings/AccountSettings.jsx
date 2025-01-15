@@ -62,7 +62,7 @@ const AccountSettings = () => {
             text: "You will receive an email to reset your password.",
             icon: "question",
             showCancelButton: true,
-            confirmButtonText: "Yes, Reset",
+            confirmButtonText: "Yes, Send Reset Link",
             cancelButtonText: "No, Cancel",
         }).then((result) => {
             if (result.isConfirmed) {

@@ -60,10 +60,10 @@ const NavbarComponent = () => {
                 {/* Navigation Links */}
                 {/* <NavigationLinks user={user} /> */}
                 <ul className="hidden md:flex space-x-2">
-                    <Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Home</Link>
+                    {!Authenticated && <Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Home</Link>}
                     <Link to="/feed/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Job Feed</Link>
                     {Authenticated && user.role == "Employer" && <Link to="/add/post/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Add Post</Link>}
-                    <Link to="/about" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">About</Link>
+                    <Link to="/blogs/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Blog</Link>
                 </ul>
                 <div>
                     {Authenticated ? (

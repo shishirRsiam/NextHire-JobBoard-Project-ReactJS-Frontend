@@ -1,8 +1,23 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import { motion } from 'framer-motion';  // Import motion from framer-motion
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
+
 
 const HomePage = () => {
+    const navigate = useNavigate();
+    console.log('HomePage');
+    console.log(localStorage.getItem('authToken'));
+
+    useEffect(() => {
+        console.log('HomePage');
+        console.log(localStorage.getItem('authToken'));
+
+        // Check auth token and navigate
+        if (localStorage.getItem('authToken')) {
+            navigate('/feed/'); // Navigate programmatically without refresh
+        }
+    }, [navigate]);
+
     return (
         <div className="">
             {/* Hero Section */}
@@ -75,38 +90,73 @@ const HomePage = () => {
                 </div>
             </motion.section>
 
-            {/* Testimonials Section */}
+            {/* How It Works Section */}
             <motion.section
-                className="py-16 bg-blue-50"
+                id="how-it-works"
+                className="py-16 bg-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+            >
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold mb-12">How It Works</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <motion.div
+                            className="p-6"
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.6 }}
+                        >
+                            <img src="/images/register.svg" alt="Register" className="mb-4 mx-auto" />
+                            <h3 className="text-xl font-bold mb-4">Register</h3>
+                            <p>Create an account and set up your profile to get started.</p>
+                        </motion.div>
+
+                        <motion.div
+                            className="p-6"
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.8 }}
+                        >
+                            <img src="/images/search.svg" alt="Search" className="mb-4 mx-auto" />
+                            <h3 className="text-xl font-bold mb-4">Search</h3>
+                            <p>Browse through curated job opportunities or candidate profiles.</p>
+                        </motion.div>
+
+                        <motion.div
+                            className="p-6"
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 1 }}
+                        >
+                            <img src="/images/hire.svg" alt="Hire" className="mb-4 mx-auto" />
+                            <h3 className="text-xl font-bold mb-4">Hire</h3>
+                            <p>Connect, collaborate, and hire the right talent with ease.</p>
+                        </motion.div>
+                    </div>
+                </div>
+            </motion.section>
+
+            {/* Blog Highlights Section */}
+            <motion.section
+                id="blog"
+                className="py-16 bg-gray-50"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1 }}
             >
                 <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-12">What Our Users Say</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <motion.div
-                            className="bg-white shadow-lg rounded-lg p-6"
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 1 }}
-                        >
-                            <p className="italic">
-                                "NextHire made our hiring process 10x faster and more efficient!"
-                            </p>
-                            <h4 className="font-bold mt-4">- John Doe, CEO</h4>
-                        </motion.div>
-
+                    <h2 className="text-3xl font-bold mb-12">Blog Highlights</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <motion.div
                             className="bg-white shadow-lg rounded-lg p-6"
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 1.2 }}
                         >
-                            <p className="italic">
-                                "The analytics feature provided us with game-changing insights."
-                            </p>
-                            <h4 className="font-bold mt-4">- Jane Smith, HR Manager</h4>
+                            <h3 className="text-xl font-bold mb-4">5 Tips for Writing a Winning Resume</h3>
+                            <p>Learn how to create a resume that stands out and gets noticed.</p>
+                            <Link to="/blog/resume-tips" className="text-blue-500 hover:underline">Read More</Link>
                         </motion.div>
 
                         <motion.div
@@ -115,10 +165,9 @@ const HomePage = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 1.4 }}
                         >
-                            <p className="italic">
-                                "The analytics feature provided us with game-changing insights."
-                            </p>
-                            <h4 className="font-bold mt-4">- Jane Smith, HR Manager</h4>
+                            <h3 className="text-xl font-bold mb-4">Top Interview Questions in 2025</h3>
+                            <p>Prepare for your next interview with our expert tips and questions.</p>
+                            <Link to="/blog/interview-questions" className="text-blue-500 hover:underline">Read More</Link>
                         </motion.div>
 
                         <motion.div
@@ -127,10 +176,9 @@ const HomePage = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 1.6 }}
                         >
-                            <p className="italic">
-                                "The analytics feature provided us with game-changing insights."
-                            </p>
-                            <h4 className="font-bold mt-4">- Jane Smith, HR Manager</h4>
+                            <h3 className="text-xl font-bold mb-4">The Future of Remote Work</h3>
+                            <p>Explore how remote work is evolving and what it means for you.</p>
+                            <Link to="/blog/remote-work" className="text-blue-500 hover:underline">Read More</Link>
                         </motion.div>
                     </div>
                 </div>

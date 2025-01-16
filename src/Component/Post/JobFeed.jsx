@@ -63,7 +63,7 @@ const JobFeed = () => {
         />
       }
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-xl">
-        <h1 className="text-3xl font-bold mb-2 text-gray-800 mb-8">{feedName}</h1>
+        <h1 className="text-3xl font-bold mb-2 text-gray-800 mb-8">{feedName} : {jobs.length}</h1>
 
         {loading && <LoadingPage />}
 

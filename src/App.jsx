@@ -21,6 +21,8 @@ import EditPostForm from './Component/Post/EditPostForm';
 import SettingsPage from './Component/Settings/SettingPage';
 import ResetPassword from './Component/Password/ResetPassword';
 import ForgotPassword from './Component/Password/ForgotPassword';
+import BlogPage from './Component/Blog/BlogPage';
+import BlogDetails from './Component/Blog/BlogDetails';
 
 
 function App() {
@@ -42,7 +44,8 @@ function App() {
         <Route path="/job/:jobId/" element={<JobDetails />} />
         <Route path="/settings/" element={<SettingsPage />} />
         {/* <Route path="/settings/" element={<LoadingPage />} /> */}
-        <Route path="/about/" element={<LoadingPage />} />
+        <Route path="/blog/:link/" element={<BlogDetails />} />
+        <Route path="/blogs/" element={<BlogPage />} />
         <Route path="/profile/" element={<ProfilePage />} />
         <Route path="/add/post/" element={<AddPostForm />} />
         <Route path="/edit/job/" element={<EditPostForm />} />

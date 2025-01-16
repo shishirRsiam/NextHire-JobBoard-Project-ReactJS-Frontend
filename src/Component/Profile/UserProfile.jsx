@@ -73,7 +73,7 @@ const UserProfile = (props) => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.9, delay: 0.6 }}>
-                            <h2 className="text-xl font-bold text-gray-800 mb-4">Skills and Interests</h2>
+                            {user.skill.length > 0 && <h2 className="text-xl font-bold text-gray-800 mb-4">Skills and Interests</h2>}
                             <div className="flex flex-wrap gap-3">
                                 {user.skill.map((skill) => (
                                     <span key={skill.id}

@@ -46,7 +46,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
       if (!response.ok) {
         console.error("Failed to update user data");
       }
-      SuccessSwalAlert({ text: 'Profile updated successfully.' });
+      SuccessSwalAlert({ text: 'Profile updated successfully.' , next_url: '/profile/'});
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -115,8 +115,6 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
       // If it's not already added, add it to the skills array
       setSkills([...skills, suggestedSkill]);
     }
-    setNewSkill("");
-    setSuggestions([]);
   };
 
   const handleCheckAllReadyAdded = (suggestion) => {

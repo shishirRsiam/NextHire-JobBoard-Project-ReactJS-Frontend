@@ -162,7 +162,7 @@ const JobDetails = () => {
           </motion.div>
         </div>
       </div>
-      <p className="max-w-sm mt-10 mx-auto text-2xl font-semibold text-gray-800">Suggestions For You</p>
+      {suggestedJobs.length && <p className="max-w-sm mt-10 mx-auto text-2xl font-semibold text-gray-800">Suggestions For You</p>}
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {suggestedJobs.map((job) => (
           <SuggestComponent key={job.id} job={job} />

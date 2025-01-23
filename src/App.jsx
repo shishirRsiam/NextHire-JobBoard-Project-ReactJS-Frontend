@@ -43,7 +43,6 @@ function App() {
         <Route path="/feed/" element={<JobFeed />} />
         <Route path="/job/:jobId/" element={<JobDetails />} />
         <Route path="/settings/" element={<SettingsPage />} />
-        {/* <Route path="/settings/" element={<LoadingPage />} /> */}
         <Route path="/blog/:link/" element={<BlogDetails />} />
         <Route path="/blogs/" element={<BlogPage />} />
         <Route path="/profile/" element={<ProfilePage />} />

@@ -3,12 +3,7 @@ import LoadingPage from "../Authentication/LoadingPage";
 import API from "../Authentication/API";
 import UserProfile from "./UserProfile";
 
-const ProfilePage = (props) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [fetchError, setFetchError] = useState(null);
-    const [jobsApplied, setJobsApplied] = useState([]);
-    const [jobsPosted, setJobsPosted] = useState([]);
+const ProfilePage = ({loading, user, jobsApplied, postedData}) => {
 
     const fetchUser = async () => {
         try {
@@ -26,6 +21,8 @@ const ProfilePage = (props) => {
             }
         
             const data = await response.json();
+
+            console.log('User Profile Data ->', data);
         
             setUser(data.userData);
             setJobsApplied(data.appliedData);
@@ -36,21 +33,12 @@ const ProfilePage = (props) => {
         }
     };
 
-    useEffect(() => {
-        console.log("Token:", localStorage.getItem("authToken"));
-        // setUser(props.user);
-        // setLoading(false);
-        // console.log('User:', user);
-        
-        fetchUser();
-    }, []);
-
     return (
         <>
             {loading ? (
                 <LoadingPage />
             ) : (
-                <UserProfile user={user} jobsApplied={jobsApplied} postedData={jobsPosted}/>
+                null
             )}
         </>
     );

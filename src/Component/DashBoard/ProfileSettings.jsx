@@ -67,7 +67,7 @@ const ProfileSettings = ({ user, fetchUser }) => {
     return (
         <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Profile Settings</h2>
+                <h2 className="text-2xl font-bold">Account Settings</h2>
                 <button onClick={toggleEditable} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
                     {!isEditable ? 'Want to Edit Your Profile?' : 'Cancel'}
                 </button>

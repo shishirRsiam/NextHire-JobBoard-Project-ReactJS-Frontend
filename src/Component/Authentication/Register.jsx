@@ -7,7 +7,7 @@ import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
     first_name: '', last_name: '', username: '', email: '', 
-    password: '', confirm_password: '', role: '', company_name: '',
+    password: '', confirm_password: '', role: 'Job Seeker', company_name: '',
     terms_conditions: true,
   });
 

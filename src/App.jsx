@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, StrictMode } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,7 +18,7 @@ import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';
 import ViewApplication from './Component/Post/ViewApplication';
 import EditPostForm from './Component/Post/EditPostForm';
-import SettingsPage from './Component/Settings/SettingPage';
+import DashBoardPage from './Component/DashBoard/DashBoardPage';
 import ResetPassword from './Component/Password/ResetPassword';
 import ForgotPassword from './Component/Password/ForgotPassword';
 import BlogPage from './Component/Blog/BlogPage';
@@ -28,8 +28,49 @@ import About from './Component/Main/About';
 
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [jobsPosted, setJobsPosted] = useState([]);
+  const [jobsApplied, setJobsApplied] = useState([]);
+  const [activeTab, setActiveTab] = useState('profile');
+  const [authenticated, setAuthenticated] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
+        method: "POST",
+        headers: {
+          Authorization: `${localStorage.getItem("authToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // setLoading(false);
+      setAuthenticated(true);
+      setUser(data.userData);
+      setJobsPosted(data.postedData);
+      setJobsApplied(data.appliedData);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setAuthenticated(false);
+    } finally {
+      // setLoading(false);
+      useAuth(setLoading, setUser);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <>
+    <StrictMode >
       <div>
         <ToastContainer position="top-right" autoClose={3000} />
       </div>
@@ -44,7 +85,7 @@ function App() {
         <Route path="/register/" element={<RegisterPage />} />
         <Route path="/feed/" element={<JobFeed />} />
         <Route path="/job/:jobId/" element={<JobDetails />} />
-        <Route path="/settings/" element={<SettingsPage />} />
+        <Route path="/dashboard/" element={<DashBoardPage />} />
         <Route path="/about/" element={<About />} />
         <Route path="/contact/us/" element={<ContactUs />} />
         <Route path="/blog/:link/" element={<BlogDetails />} />
@@ -55,7 +96,7 @@ function App() {
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>
       <FooterComponent />
-    </>
+    </StrictMode>
   );
 }
 

@@ -6,11 +6,7 @@ import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
 import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
 import API from "../Authentication/API";
 
-const JobPostedShowingComponent = (props) => {
-    const jobsPosted = props.jobsPosted;
-    useEffect(() => {
-    })
-
+const JobPostedShowingComponent = ({ jobsPosted }) => {
     const fetchDelete = async (job) => {
         try {
             const response = await fetch(`${API.AddPostAPI}${job.id}/?is_delete=1`);

@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 
 const LoadingPage = () => {
     return (
-        <div>
-            <div className="flex items-center justify-center h-[70vh] bg-gray-100">
+        <>
+            <div className="flex items-center justify-center h-[70vh] bg-gray-100 rounded-xl">
                 <motion.div className="flex flex-col items-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -55,7 +55,7 @@ const LoadingPage = () => {
                     </motion.h1>
                 </motion.div>
             </div>
-        </div>
+        </>
     );
 };
 

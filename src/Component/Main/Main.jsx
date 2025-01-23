@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
 
@@ -8,25 +8,27 @@ const HomePage = () => {
     console.log('HomePage');
     console.log(localStorage.getItem('authToken'));
 
+    const [authenticated, setAuthenticated] = useState(false);
+
     useEffect(() => {
-        console.log('HomePage');
-        console.log(localStorage.getItem('authToken'));
+        if(localStorage.getItem('authToken')) {
+            setAuthenticated(true);
+        }
 
         // Check auth token and navigate
-        if (localStorage.getItem('authToken')) {
-            navigate('/feed/'); // Navigate programmatically without refresh
-        }
+        // if (localStorage.getItem('authToken')) {
+        //     navigate('/feed/'); // Navigate programmatically without refresh
+        // }
     }, [navigate]);
 
     return (
         <div className="">
             {/* Hero Section */}
-            <motion.section
+            {!authenticated && <motion.section
                 className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-20"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-            >
+                transition={{ duration: 1 }}>
                 <div className="container mx-auto px-4 text-center mt-10">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6">
                         Welcome to NextHire
@@ -38,7 +40,7 @@ const HomePage = () => {
                         Login
                     </Link>
                 </div>
-            </motion.section>
+            </motion.section>}
 
             {/* Features Section */}
             <motion.section
@@ -185,12 +187,11 @@ const HomePage = () => {
             </motion.section>
 
             {/* Call to Action */}
-            <motion.section
+            {!authenticated && <motion.section
                 className="bg-indigo-500 text-white py-16"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.8 }}
-            >
+                transition={{ duration: 1, delay: 1.8 }}>
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
                     <p className="text-lg mb-8">
@@ -200,7 +201,7 @@ const HomePage = () => {
                         Sign Up Now
                     </Link>
                 </div>
-            </motion.section>
+            </motion.section>}
         </div>
     );
 };

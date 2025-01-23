@@ -8,7 +8,7 @@ import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 const sendEmailNotification = async (email, action) => {
     ProccessingSwalAlert();
     // Send email notification
-    const api = 'http://localhost:8000/api/email/sent/?email_sent=reset_password'
+    const api = 'https://next-hire-api.vercel.app/api/email/sent/?email_sent=reset_password'
     const response = await fetch(`${api}`, {
         method: 'GET',
         headers: {

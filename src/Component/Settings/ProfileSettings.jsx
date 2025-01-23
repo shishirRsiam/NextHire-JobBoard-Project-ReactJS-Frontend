@@ -39,7 +39,7 @@ const ProfileSettings = ({ user, fetchUser }) => {
         console.log('Updated User Data:', formData);
         const fetchUpdatedUserData = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/update/profile/", {
+                const response = await fetch("https://next-hire-api.vercel.app/api/update/profile/", {
                     method: "POST",
                     headers: {
                         Authorization: `${localStorage.getItem("authToken")}`,

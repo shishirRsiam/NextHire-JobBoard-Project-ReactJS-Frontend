@@ -11,21 +11,15 @@ import ErrorSwalAlert from "../SwalAlert/ErrorSwalAlert";
 const JobPostForm = ({ existingJob, onSubmit }) => {
   const [formData, setFormData] = useState(
     existingJob || {
-      title: "Frontend Developer",
-      description: "Looking for a frontend developer with experience in React.js and CSS.",
-      company: "JS Company",
-      location: "Lalmonirhat, Bangladesh",
-      deadline: "2024-12-31",
-      salary: "50000",
-      type: "Full Time",
-      category: '',
+      title: '', description: '', company: '', location: '', 
+      deadline: '', salary: '', type: 'Full Time', category: '',
     }
   );
 
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [canPost, setCanPost] = useState(false);
-  const [newSkill, setNewSkill] = useState("");
+  const [newSkill, setNewSkill] = useState('');
   const [allSkills, setAllSkills] = useState([]);
   const [skills, setSkills] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -37,7 +31,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       const updatedData = { ...prevData, [name]: value };
       return updatedData;
     });
-
   };
 
 
@@ -59,11 +52,11 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     });
     // formData.category = skills.map((skill) => skill.id);
     formData.category = skills.map((skill) => skill.id)
-    const api = API.AddPostAPI;
     ProccessingSwalAlert();
 
     try {
-      const response = await fetch(api, {
+      // const response = await fetch('http://127.0.0.1:8000/api/post/', {
+      const response = await fetch('https://next-hire-api.vercel.app/api/post/', {
         method: "POST",
         headers: {
           "Authorization": `${localStorage.getItem("authToken")}`,
@@ -97,7 +90,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/auth/?can_post=1", {
+        const response = await fetch("https://next-hire-api.vercel.app/api/auth/?can_post=1", {
           method: "GET",
           headers: {
             Authorization: `${localStorage.getItem("authToken")}`,
@@ -119,7 +112,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     fetchUser();
     const fetchskills = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/categories/");
+        const response = await fetch("https://next-hire-api.vercel.app/api/categories/");
         const data = await response.json();
         setLoading(false);
         setAllSkills(data);
@@ -133,7 +126,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
 
   const fetchAddNewSkills = async (skill) => {
     try {
-      const response = await fetch("http://localhost:8000/api/categories/", {
+      const response = await fetch("https://next-hire-api.vercel.app/api/categories/", {
         method: "POST",
         headers: {
           Authorization: `${localStorage.getItem("authToken")}`,
@@ -149,7 +142,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       const data = await response.json();
       setAllSkills([...allSkills, data]);
       setSkills([...skills, data]);
-      setNewSkill("");
+      setNewSkill('');
       setSuggestions([]);
     } catch (error) {
       console.error("Error updating user data:", error);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const useAuth = ({ setAuthenticated, setUser }) => {
     const fetchUser = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/auth/", {
+            const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
                 method: "GET",
                 headers: {
                     Authorization: `${localStorage.getItem("authToken")}`,

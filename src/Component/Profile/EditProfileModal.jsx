@@ -18,7 +18,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
   useEffect(() => {
     const fetchskills = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/categories/");
+        const response = await fetch("https://next-hire-api.vercel.app/api/categories/");
         const data = await response.json();
         setAllSkills(data);
       } catch (error) {
@@ -30,7 +30,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
 
   const fetchUpdatedUserData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/update/profile/", {
+      const response = await fetch("https://next-hire-api.vercel.app/api/update/profile/", {
         method: "POST",
         headers: {
           Authorization: `${localStorage.getItem("authToken")}`,
@@ -54,7 +54,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
 
   const fetchAddNewSkills = async (skill) => {
     try {
-      const response = await fetch("http://localhost:8000/api/categories/", {
+      const response = await fetch("https://next-hire-api.vercel.app/api/categories/", {
         method: "POST",
         headers: {
           Authorization: `${localStorage.getItem("authToken")}`,

@@ -12,7 +12,7 @@ const ProfilePage = (props) => {
 
     const fetchUser = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/auth/", {
+            const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
                 method: "POST",
                 headers: {
                     "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header

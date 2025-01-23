@@ -6,9 +6,8 @@ import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
-    first_name: "Sample", last_name: "Siam", username: "shishir", email: "shishir.siam01@gmail.com", 
-    password: "123456", confirm_password: "123456",
-    role: "", company_name: "JS Company",
+    first_name: '', last_name: '', username: '', email: '', 
+    password: '', confirm_password: '', role: '', company_name: '',
     terms_conditions: true,
   });
 
@@ -61,7 +60,7 @@ const RegisterForm = () => {
 
   const FetchAPI = async () => {
     try {
-        const response = await fetch("http://localhost:8000/api/register/", {
+        const response = await fetch("https://next-hire-api.vercel.app/api/register/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

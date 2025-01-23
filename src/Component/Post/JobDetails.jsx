@@ -34,7 +34,7 @@ const JobDetails = () => {
     window.scrollTo(0, 0);
     const fetchApply = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/post/apply/${jobId - 1552004}/`, {
+        const response = await fetch(`https://next-hire-api.vercel.app/api/post/apply/${jobId - 1552004}/`, {
           method: "POST",
           headers: {
             Authorization: `${localStorage.getItem("authToken")}`,
@@ -75,7 +75,7 @@ const JobDetails = () => {
     };
     const fetchSuggest = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/job/suggested/`, {
+        const response = await fetch(`https://next-hire-api.vercel.app/api/job/suggested/`, {
           method: "GET",
           headers: {
             Authorization: `${localStorage.getItem("authToken")}`,

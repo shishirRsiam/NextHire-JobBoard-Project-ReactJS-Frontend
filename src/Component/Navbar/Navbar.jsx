@@ -15,7 +15,7 @@ const NavbarComponent = () => {
 
     const fetchUser = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/auth/", {
+                const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
                     method: "POST",
                     headers: {
                         "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header
@@ -57,13 +57,13 @@ const NavbarComponent = () => {
             transition={{ type: 'spring', stiffness: 100, damping: 25 }} >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <a href="/" className="text-2xl font-bold text-white">NextHire</a>
-                {/* Navigation Links */}
-                {/* <NavigationLinks user={user} /> */}
                 <ul className="hidden md:flex space-x-2">
-                    {!Authenticated && <Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Home</Link>}
+                    {<Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Home</Link>}
                     <Link to="/feed/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Job Feed</Link>
                     {Authenticated && user.role == "Employer" && <Link to="/add/post/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Add Post</Link>}
                     <Link to="/blogs/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Blog</Link>
+                    <Link to="/about/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">About</Link>
+                    <Link to="/contact/us/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Contact Us</Link>
                 </ul>
                 <div>
                     {Authenticated ? (

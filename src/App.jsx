@@ -23,6 +23,8 @@ import ResetPassword from './Component/Password/ResetPassword';
 import ForgotPassword from './Component/Password/ForgotPassword';
 import BlogPage from './Component/Blog/BlogPage';
 import BlogDetails from './Component/Blog/BlogDetails';
+import ContactUs from './Component/Main/ContactUs';
+import About from './Component/Main/About';
 
 
 function App() {
@@ -43,10 +45,8 @@ function App() {
         <Route path="/feed/" element={<JobFeed />} />
         <Route path="/job/:jobId/" element={<JobDetails />} />
         <Route path="/settings/" element={<SettingsPage />} />
-        {/* <Route path="/settings/" element={<LoadingPage />} /> */}
-        <Route path="/about/" element={<LoadingPage />} />
-        <Route path="/contact/us/" element={<LoadingPage />} />
-        <Route path="/about/" element={<LoadingPage />} />
+        <Route path="/about/" element={<About />} />
+        <Route path="/contact/us/" element={<ContactUs />} />
         <Route path="/blog/:link/" element={<BlogDetails />} />
         <Route path="/blogs/" element={<BlogPage />} />
         <Route path="/profile/" element={<ProfilePage />} />
@@ -55,7 +55,6 @@ function App() {
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>
       <FooterComponent />
-
     </>
   );
 }

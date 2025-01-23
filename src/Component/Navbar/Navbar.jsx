@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import ProfileDropdown from './ProfileDropdown';
 import NavigationLinks from './NavigationLinks';
 import useAuth from '../Authentication/useAuth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle, faEnvelope, faSuitcase, faInfoCircle, faHome, faNewspaper, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+
 
 
 const NavbarComponent = () => {
@@ -14,40 +17,37 @@ const NavbarComponent = () => {
     const [user, setUser] = useState(null);
 
     const fetchUser = async () => {
-            try {
-                const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({}),
-                });
-            
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-            
-                const data = await response.json();  
-                setUser(data.userData);
-                setAuthenticated(true);
-            } catch (error) {
-                console.log("Error fetching user:", error);
+        try {
+            const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({}),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        };
-    
-        useEffect(() => {
-            fetchUser();
-            // const { Authenticatedff, userff } = useAuth();
-            // setUser(userff);
-            // setAuthenticated(Authenticatedff);
-        }, []);
+
+            const data = await response.json();
+            setUser(data.userData);
+            setAuthenticated(true);
+        } catch (error) {
+            console.log("Error fetching user:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    
+
 
     return (
         <motion.nav
@@ -56,14 +56,37 @@ const NavbarComponent = () => {
             animate={{ y: isVisible ? 0 : -100 }} // Animate to the visible state
             transition={{ type: 'spring', stiffness: 100, damping: 25 }} >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <a href="/" className="text-2xl font-bold text-white">NextHire</a>
+                <a href="/" className="text-2xl font-bold text-white">
+                    <span>NextHire</span>
+                </a>
                 <ul className="hidden md:flex space-x-2">
-                    {<Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Home</Link>}
-                    <Link to="/feed/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Job Feed</Link>
-                    {Authenticated && user.role == "Employer" && <Link to="/add/post/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Add Post</Link>}
-                    <Link to="/blogs/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Blog</Link>
-                    <Link to="/about/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">About</Link>
-                    <Link to="/contact/us/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all">Contact Us</Link>
+                    <Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                        <FontAwesomeIcon icon={faHome} className="h-5 w-5" />
+                        <span>Home</span>
+                    </Link>                    <Link to="/feed/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                        <FontAwesomeIcon icon={faBriefcase} className="h-5 w-5" />
+                        <span>Job Feed</span>
+                    </Link>
+                    
+                    {Authenticated && user.role == "Employer" && (
+                        <Link to="/add/post/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                            <FontAwesomeIcon icon={faPlusCircle} className="h-5 w-5" />
+                            <span>Add Post</span>
+                        </Link>
+                    )}    
+
+                    <Link to="/blogs/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                        <FontAwesomeIcon icon={faNewspaper} className="h-5 w-5" />
+                        <span>Blog</span>
+                    </Link>
+                    <Link to="/about/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                        <FontAwesomeIcon icon={faInfoCircle} className="h-5 w-5" />
+                        <span>About</span>
+                    </Link>
+                    <Link to="/contact/us/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
+                        <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5" />
+                        <span>Contact Us</span>
+                    </Link>
                 </ul>
                 <div>
                     {Authenticated ? (

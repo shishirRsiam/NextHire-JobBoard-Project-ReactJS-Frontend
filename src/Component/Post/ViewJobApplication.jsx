@@ -1,7 +1,26 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
+import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
+import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
+
 
 const ViewJobsApplication = ({ jobPost, applications }) => {
+    const handleAcceptApplication = async (applicationId) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Are you sure to accept this application.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Accept",
+            cancelButtonText: "No, Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                SuccessSwalAlert({ title: 'Application Accepted', text: 'You have accepted the application.',});
+            }
+        });
+    }
+
     return (
         <motion.div
             className="my-5 max-w-7xl mx-auto bg-gradient-to-b from-gray-50 to-gray-200 py-12 px-6 rounded-3xl shadow-lg"
@@ -16,7 +35,7 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                 transition={{ duration: 0.7 }}>
                 <h2 className="text-3xl font-extrabold">{jobPost.title}</h2>
                 <p className="text-lg mt-2">{jobPost.company}</p>
-                <p className="text-sm mt-4">{jobPost.description}</p>
+                {/* <p className="text-sm mt-4">{jobPost.description}</p> */}
                 <div className="mt-4 text-sm">
                     <p><strong>Location:</strong> {jobPost.location}</p>
                     <p><strong>Salary:</strong> {jobPost.salary}</p>
@@ -67,10 +86,16 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                                 </p>
                                 <div className="mt-4 text-sm">
                                     <p>{application.description}</p>
-                                    <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700 mt-2 block"
-                                        href={application.resume} >
-                                        View Resume
-                                    </a>
+                                    <div className="flex justify-between">
+                                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 font-bold hover:text-blue-700 mt-2 block rounded-lg border border-blue-500 px-4 py-2"
+                                            href={application.resume} >
+                                            View Resume
+                                        </a>
+                                        <button target="_blank" rel="noopener noreferrer" className="text-black font-bold hover:text-blue-700 mt-2 bg-green-300 rounded-lg block border border-blue-500 px-4 py-2"
+                                            onClick={handleAcceptApplication} >
+                                            Approve Application
+                                        </button>
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}

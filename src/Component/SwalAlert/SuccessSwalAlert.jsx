@@ -12,7 +12,7 @@ const SuccessSwalAlert = (props) => {
         iconColor: '#2e7d32',
     }).then((result) => {
         if (result.isConfirmed && props.next_url) {
-            window.location.href = props.next_url;
+            window.location.href = '/dashboard/';
         }
     });
 };

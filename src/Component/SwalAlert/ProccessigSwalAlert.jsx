@@ -1,5 +1,5 @@
 
-const ProccessingSwalAlert = (props) => {
+const ProccessingSwalAlert = () => {
     import('sweetalert2').then(Swal => {
         Swal.default.fire({
             didOpen: () => {

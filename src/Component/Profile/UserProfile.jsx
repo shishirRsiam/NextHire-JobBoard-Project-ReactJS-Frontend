@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Routes, Route, Link } from 'react-router-dom';
-import JobAppliedComponent from "./JobAppliedComponent";
 import EditProfileModal from "./EditProfileModal";
 import LoadingPage from "../Authentication/LoadingPage";
 
 const UserProfile = ({ loading, user }) => {
     const [isModalOpen, setModalOpen] = useState(false);
-    const defaultProfilePic = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
+
     const toggleModal = () => {
         setModalOpen((prev) => !prev);
-    }
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [])
+    }, []);
 
-    if (loading) return <LoadingPage />
+    if (loading) return <LoadingPage />;
 
     return (
         <motion.div 
@@ -25,13 +23,19 @@ const UserProfile = ({ loading, user }) => {
             transition={{ duration: 0.5 }}>
 
             {/* Profile Section */}
-            <div className="">
+            <div className="flex justify-center content-center">
                 {/* Profile Picture */}
                 <div className="flex-shrink-0">
                     <div className="relative inline-block">
-                        <img
-                            src={user.profilePic || defaultProfilePic} alt="Profile"
-                            className="w-40 h-40 rounded-full shadow-lg border-4 border-blue-500 " />
+                        {user.profilePic ? (
+                            <img src={user.profilePic} alt="Profile"
+                                className="w-40 h-40 rounded-full shadow-lg border-4 border-blue-500"/>
+                        ) : (
+                            <div className="w-60 h-60 flex items-center justify-center rounded-full shadow-lg border-4 border-blue-500 bg-gray-200 text-gray-700 text-8xl  font-bold"
+                                style={{ backgroundColor: "#E5E7EB" }}>
+                                {`${user.user.first_name[0]}${user.user.last_name[0]}`.toUpperCase()}
+                            </div>
+                        )}
                         <span className="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-white rounded-full"></span>
                     </div>
                 </div>

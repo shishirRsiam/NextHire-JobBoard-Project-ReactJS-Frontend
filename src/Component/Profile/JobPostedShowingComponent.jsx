@@ -72,19 +72,19 @@ const JobPostedShowingComponent = ({ jobsPosted }) => {
                                     <Link to={{
                                         pathname: "/edit/job/", }} state={{ existingJob: job }}
                                         className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
-                                        Edit Post
+                                        Edit
                                     </Link>
                                     <button onClick={() => handleDeleteJob(job)}
                                         className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-200">
-                                        Delete Post
+                                        Delete
                                     </button>
                                     <Link to={`/job/${job.id + 1552004}/applications`}
                                         className="bg-orange-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition duration-200">
-                                        View Application
+                                        Application
                                     </Link>
 
                                     <Link to={`/job/${job.id + 1552004}/`} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200">
-                                        View Details
+                                        Details
                                     </Link>
                                 </div>
                             </motion.div>

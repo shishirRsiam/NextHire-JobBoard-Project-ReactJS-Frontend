@@ -14,7 +14,7 @@ const SuggestComponent = (props) => {
         <div className="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out">
             <div className="px-6 py-4">
                 <h2 className="font-bold text-xl mb-2 text-gray-800">{job.title}</h2>
-                <p className="text-gray-600 mb-4">{job.description}</p>
+                {/* <p className="text-gray-600 mb-4">{job.description}</p> */}
                 <div className="flex items-center justify-between text-sm text-gray-500">
                     <span>📍 {job.location}</span>
                     <span>💼 {job.company}</span>

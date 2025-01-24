@@ -57,7 +57,7 @@ const ProfileDropdown = (props) => {
       </button>  */}
 
 
-      <button onClick={toggleDropdown} className="w-14 h-14 p-4 flex items-center justify-center rounded-full shadow-lg border-4 border-blue-500 bg-gray-200 text-gray-700 text-xl  font-bold">
+      <button onClick={toggleDropdown} className="w-14 h-14 p-3 flex items-center justify-center rounded-full shadow-lg border-4 border-blue-500 bg-gray-200 text-gray-700 text-xl  font-bold">
           {`${props.user.user.first_name[0]}${props.user.user.last_name[0]}`.toUpperCase()}
       </button>
 

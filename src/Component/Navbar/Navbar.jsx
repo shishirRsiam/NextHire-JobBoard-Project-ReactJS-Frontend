@@ -59,7 +59,7 @@ const NavbarComponent = () => {
                 <a href="/" className="text-2xl font-bold text-white">
                     <span>NextHire</span>
                 </a>
-                <ul className="hidden md:flex space-x-2">
+                <ul className="hidden md:flex space-x-1 py-2">
                     <Link to="/" className="text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-300 hover:text-gray-800 transition-all flex items-center space-x-2">
                         <FontAwesomeIcon icon={faHome} className="h-5 w-5" />
                         <span>Home</span>

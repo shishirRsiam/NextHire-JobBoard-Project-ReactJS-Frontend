@@ -18,7 +18,7 @@ const JobComponent = (props) => {
 
         <div className="flex items-center justify-between mb-4">
           <div className="flex flex-col">
-            <h2 className="text-xl font-semibold text-gray-800">{job.title} : {job.id}</h2>
+            <h2 className="text-xl font-semibold text-gray-800">{job.title}</h2>
             <p className="text-sm text-gray-500">{job.company}  • {job.location}</p>
             <p className="text-sm text-gray-500">Salary: {job.salary}</p>
           </div>

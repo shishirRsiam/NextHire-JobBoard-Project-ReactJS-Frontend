@@ -1,4 +1,4 @@
-const rootApi = 'https://next-hire-api.vercel.app/api';
+const rootApi = 'http://127.0.0.1:8000/api';
 const API = {
     RegistrationsAPI: `${rootApi}/register/`,
     LoginAPI: `${rootApi}/login/`,
@@ -8,5 +8,7 @@ const API = {
     AddPostAPI: `${rootApi}/post/`,
     ProfileAPI: `${rootApi}/profile/`,
 };
+
+// https://next-hire-api.vercel.app/api
 
 export default API;

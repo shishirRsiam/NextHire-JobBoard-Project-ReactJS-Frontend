@@ -56,7 +56,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
 
     try {
       // const response = await fetch('http://127.0.0.1:8000/api/post/', {
-      const response = await fetch('https://next-hire-api.vercel.app/api/post/', {
+      const response = await fetch('http://127.0.0.1:8000/api/post/', {
         method: "POST",
         headers: {
           "Authorization": `${localStorage.getItem("authToken")}`,
@@ -90,7 +90,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("https://next-hire-api.vercel.app/api/auth/?can_post=1", {
+        const response = await fetch("http://127.0.0.1:8000/api/auth/?can_post=1", {
           method: "GET",
           headers: {
             Authorization: `${localStorage.getItem("authToken")}`,
@@ -112,7 +112,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
     fetchUser();
     const fetchskills = async () => {
       try {
-        const response = await fetch("https://next-hire-api.vercel.app/api/categories/");
+        const response = await fetch("http://127.0.0.1:8000/api/categories/");
         const data = await response.json();
         setLoading(false);
         setAllSkills(data);
@@ -126,7 +126,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
 
   const fetchAddNewSkills = async (skill) => {
     try {
-      const response = await fetch("https://next-hire-api.vercel.app/api/categories/", {
+      const response = await fetch("http://127.0.0.1:8000/api/categories/", {
         method: "POST",
         headers: {
           Authorization: `${localStorage.getItem("authToken")}`,

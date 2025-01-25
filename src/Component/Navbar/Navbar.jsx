@@ -18,7 +18,7 @@ const NavbarComponent = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await fetch("https://next-hire-api.vercel.app/api/auth/", {
+            const response = await fetch("http://127.0.0.1:8000/api/auth/", {
                 method: "POST",
                 headers: {
                     "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header

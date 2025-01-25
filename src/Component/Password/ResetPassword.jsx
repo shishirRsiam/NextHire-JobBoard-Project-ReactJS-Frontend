@@ -29,7 +29,7 @@ const ResetPassword = () => {
             try {
                 ProccessingSwalAlert();
 
-                const api = 'https://next-hire-api.vercel.app/api/update/password/';
+                const api = 'http://127.0.0.1:8000/api/update/password/';
                 const response = await fetch(api, {
                     method: 'POST',
                     headers: {

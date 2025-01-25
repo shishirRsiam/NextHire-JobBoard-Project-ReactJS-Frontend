@@ -15,7 +15,13 @@ const ViewApplication = () => {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_application=1`);
+                const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/?is_application=1`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `${localStorage.getItem("authToken")}`,
+                        "Content-Type": "application/json",
+                    }
+                });
                 const data = await response.json();
                 console.log('fetchApplications ->', data);
                 setJobPost(data.job_post);
@@ -39,7 +45,7 @@ const ViewApplication = () => {
 
     return (
         <>
-            <ViewJobsApplication jobPost={jobPost} applications={applications} />
+            <ViewJobsApplication jobPost={jobPost} applications={applications} setApplications={setApplications} />
         </>
     )
 }

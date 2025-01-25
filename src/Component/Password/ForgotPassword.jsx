@@ -14,7 +14,7 @@ const ForgotPassword = () => {
         try {
             ProccessingSwalAlert('');
 
-            const api = `https://next-hire-api.vercel.app/api/email/sent/?email_sent=forget_password&&email=${email}`;
+            const api = `http://127.0.0.1:8000/api/email/sent/?email_sent=forget_password&&email=${email}`;
             console.log('api ->', api);
             const response = await fetch(api, {
                 method: "GET",

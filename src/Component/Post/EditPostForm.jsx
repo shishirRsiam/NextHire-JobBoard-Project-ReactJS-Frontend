@@ -76,7 +76,7 @@ const EditPostForm = () => {
 
     const fetchskills = async () => {
       try {
-        const response = await fetch("https://next-hire-api.vercel.app/api/categories/");
+        const response = await fetch("http://127.0.0.1:8000/api/categories/");
         const data = await response.json();
         setLoading(false);
         setAllSkills(data);
@@ -90,7 +90,7 @@ const EditPostForm = () => {
 
   const fetchAddNewSkills = async (skill) => {
     try {
-      const response = await fetch("https://next-hire-api.vercel.app/api/categories/", {
+      const response = await fetch("http://127.0.0.1:8000/api/categories/", {
         method: "POST",
         headers: {
           Authorization: `${localStorage.getItem("authToken")}`,

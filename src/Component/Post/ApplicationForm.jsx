@@ -10,7 +10,7 @@ const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
     const fetchApply = async (event) => {
         try {
 
-            const response = await fetch(`https://next-hire-api.vercel.app/api/post/apply/${jobId - 1552004}/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/post/apply/${jobId - 1552004}/`, {
                 method: "POST",
                 headers: {
                     Authorization: `${localStorage.getItem("authToken")}`,

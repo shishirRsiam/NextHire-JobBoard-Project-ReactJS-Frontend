@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
 import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 
 
-const ViewJobsApplication = ({ jobPost, applications }) => {
-    const handleAcceptApplication = async (applicationId) => {
+const ViewJobsApplication = ({ jobPost, applications, setApplications }) => {
+    const [count, setCount] = useState(0);
+    const acceptApplication = async (applicationId) => {
+        console.log('acceptApplication ->', applicationId);
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/post/${jobPost.id}/?is_accept=${applicationId}`);
+            const data = await response.json();
+            console.log('handleAcceptApplication ->', data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        setApplications((prevApplications) =>
+            prevApplications.filter((application) => application.id !== applicationId)
+        );
+    };
+
+    useEffect(() => {
+        setApplications((prevApplications) =>
+            prevApplications.filter((application) => !application.is_accepted)
+        );
+        setCount(applications.length);
+    }, [applications]);
+
+    const handleAcceptApplication = (applicationId) => {
         Swal.fire({
             title: "Are you sure?",
             text: "Are you sure to accept this application.",
@@ -16,12 +38,13 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
             cancelButtonText: "No, Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
-                SuccessSwalAlert({ title: 'Application Accepted', text: 'You have accepted the application.',});
+                SuccessSwalAlert({ title: `Application Accepted`, text: 'You have accepted the application.', });
+                acceptApplication(applicationId);
             }
         });
     }
-
     return (
+
         <motion.div
             className="my-5 max-w-7xl mx-auto bg-gradient-to-b from-gray-50 to-gray-200 py-12 px-6 rounded-3xl shadow-lg"
             initial={{ opacity: 0 }}
@@ -53,13 +76,13 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                     transition={{ duration: 0.6 }}>
                     Applications
                 </motion.h3>
-                {applications.length === 0 ? (
+                {count === 0 ? (
                     <motion.p
                         className="text-gray-600 text-center"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5 }}>
-                        No applications yet.
+                        No new applications yet.
                     </motion.p>
                 ) : (
                     <motion.div
@@ -86,17 +109,26 @@ const ViewJobsApplication = ({ jobPost, applications }) => {
                                 </p>
                                 <div className="mt-4 text-sm">
                                     <p>{application.description}</p>
-                                    <div className="flex justify-between">
-                                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 font-bold hover:text-blue-700 mt-2 block rounded-lg border border-blue-500 px-4 py-2"
-                                            href={application.resume} >
+                                    <div className="flex justify-between items-center">
+                                        <a target="_blank" rel="noopener noreferrer"
+                                            className="text-blue-500 font-bold hover:text-blue-700 mt-2 block rounded-lg border border-blue-500 px-4 py-2"
+                                            href={application.resume}>
                                             View Resume
                                         </a>
-                                        <button target="_blank" rel="noopener noreferrer" className="text-black font-bold hover:text-blue-700 mt-2 bg-green-300 rounded-lg block border border-blue-500 px-4 py-2"
-                                            onClick={handleAcceptApplication} >
-                                            Approve Application
-                                        </button>
+                                        {application.is_accepted ? (
+                                            <div className="text-green-600 font-bold bg-green-100 border border-green-400 rounded-lg px-4 py-2">
+                                                Approved
+                                            </div>
+                                        ) : (
+                                            <button className="text-black font-bold hover:text-blue-700 mt-2 bg-green-300 rounded-lg block border border-blue-500 px-4 py-2"
+                                                onClick={() => handleAcceptApplication(application.id)}
+                                            >
+                                                Approve Application
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
+
                             </motion.div>
                         ))}
                     </motion.div>

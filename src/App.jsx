@@ -28,47 +28,6 @@ import About from './Component/Main/About';
 
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [jobsPosted, setJobsPosted] = useState([]);
-  const [jobsApplied, setJobsApplied] = useState([]);
-  const [activeTab, setActiveTab] = useState('profile');
-  const [authenticated, setAuthenticated] = useState(false);
-
-  const fetchUser = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/auth/", {
-        method: "POST",
-        headers: {
-          Authorization: `${localStorage.getItem("authToken")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      // setLoading(false);
-      setAuthenticated(true);
-      setUser(data.userData);
-      setJobsPosted(data.postedData);
-      setJobsApplied(data.appliedData);
-    } catch (error) {
-      console.error("Fetch error:", error);
-      setAuthenticated(false);
-    } finally {
-      // setLoading(false);
-      useAuth(setLoading, setUser);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
   return (
     <StrictMode >
       <div>

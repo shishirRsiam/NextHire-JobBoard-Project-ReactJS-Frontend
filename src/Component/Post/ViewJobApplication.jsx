@@ -6,7 +6,6 @@ import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 
 
 const ViewJobsApplication = ({ jobPost, applications, setApplications }) => {
-    const [count, setCount] = useState(0);
     const acceptApplication = async (applicationId) => {
         console.log('acceptApplication ->', applicationId);
         try {
@@ -17,16 +16,14 @@ const ViewJobsApplication = ({ jobPost, applications, setApplications }) => {
             console.error("Error fetching data:", error);
         }
         setApplications((prevApplications) =>
-            prevApplications.filter((application) => application.id !== applicationId)
+            prevApplications.map((application) => {
+                if (application.id === applicationId) {
+                    return { ...application, is_accepted: true };
+                }
+                return application;
+            })
         );
     };
-
-    useEffect(() => {
-        setApplications((prevApplications) =>
-            prevApplications.filter((application) => !application.is_accepted)
-        );
-        setCount(applications.length);
-    }, [applications]);
 
     const handleAcceptApplication = (applicationId) => {
         Swal.fire({
@@ -76,7 +73,7 @@ const ViewJobsApplication = ({ jobPost, applications, setApplications }) => {
                     transition={{ duration: 0.6 }}>
                     Applications
                 </motion.h3>
-                {count === 0 ? (
+                {applications.length === 0 ? (
                     <motion.p
                         className="text-gray-600 text-center"
                         initial={{ opacity: 0 }}

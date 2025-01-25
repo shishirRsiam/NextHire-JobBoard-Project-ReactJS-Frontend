@@ -19,7 +19,7 @@ const HomePage = () => {
         // if (localStorage.getItem('authToken')) {
         //     navigate('/feed/'); // Navigate programmatically without refresh
         // }
-    }, [navigate]);
+    }, []);
 
     return (
         <div className="">

@@ -39,7 +39,7 @@ const ViewApplication = () => {
             behavior: "smooth",
         });
         console.log(jobId);
-    }, [jobId])
+    }, [])
 
     if (loading) return <LoadingPage />
 

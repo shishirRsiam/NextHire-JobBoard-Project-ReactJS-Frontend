@@ -24,10 +24,10 @@ const ProfilePage = ({loading, user, jobsApplied, postedData}) => {
 
             console.log('User Profile Data ->', data);
         
-            setUser(data.userData);
-            setJobsApplied(data.appliedData);
-            setJobsPosted(data.postedData);
-            setLoading(false);
+            // setUser(data.userData);
+            // setJobsApplied(data.appliedData);
+            // setJobsPosted(data.postedData);
+            // setLoading(false);
         } catch (error) {
             console.log("Error fetching user:", error);
         }

@@ -1,12 +1,8 @@
 import { motion } from "framer-motion";
-import {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 
-const JobAppliedShowingComponent = (props) => {
-    const jobsApplied = props.jobsApplied;
-    useEffect(() => {
-        // console.log('jobsApplied ->', jobsApplied);
-    })
+const JobAppliedShowingComponent = ({ jobs, reason }) => {
     return (
         <>
             <motion.div className="mb-10"
@@ -18,13 +14,13 @@ const JobAppliedShowingComponent = (props) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.2 }}>
-                    <h2 className="text-xl font-bold text-gray-800">Jobs Applied</h2>
-                    <h2 className="text-xl font-bold text-gray-800">Total Jobs Applied: {jobsApplied.length}</h2>
+                    <h2 className="text-xl font-bold text-gray-800">Jobs {reason}</h2>
+                    <h2 className="text-xl font-bold text-gray-800">Total Jobs {reason}: {jobs.length}</h2>
                 </motion.div>
 
-                {jobsApplied.length > 0 ? (
+                {jobs.length > 0 ? (
                     <div className="space-y-4">
-                        {jobsApplied.map((job) => (
+                        {jobs.map((job) => (
                             <motion.div
                                 key={job.job.id}
                                 className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
@@ -47,7 +43,7 @@ const JobAppliedShowingComponent = (props) => {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-gray-600">No jobs applied yet.</p>
+                    <p className="text-gray-600">No jobs '{reason}' yet.</p>
                 )}
             </motion.div>
         </>

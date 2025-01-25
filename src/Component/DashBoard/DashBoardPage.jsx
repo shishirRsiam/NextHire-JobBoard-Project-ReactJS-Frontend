@@ -1,30 +1,28 @@
 import React, { useState, useEffect, StrictMode } from 'react';
 import { motion } from 'framer-motion';
-import LoadingPage from '../Authentication/LoadingPage';
 import NotFoundPage from '../Authentication/NotFoundPage';
-import AccountSettings from './AccountSettings';
 import ProfileSettings from './ProfileSettings';
 import PrivacySettings from './PrivacySettings';
 import NotificationSettings from './NotificationSettings';
 import PreferencesSettings from './PreferencesSettings';
 import BillingSettings from './BillingSettings';
-import ProfilePage from '../Profile/Profile';
 import UserProfile from '../Profile/UserProfile';
 import JobPostedShowingComponent from '../Profile/JobPostedShowingComponent';
 import JobAppliedShowingComponent from '../Profile/JobAppliedShowingComponent';
-import useAuth from '../Authentication/useAuth';
-import { use } from 'react';
+
 
 const SettingsPage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [jobsPosted, setJobsPosted] = useState([]);
   const [jobsApplied, setJobsApplied] = useState([]);
+  const [pendingJobs, setPendingJobs] = useState([]);
+  const [approvedJobs, setApprovedJobs] = useState([]);
   const [activeTab, setActiveTab] = useState('profile');
   const [authenticated, setAuthenticated] = useState(false);
-  const [tabs , setTabs] = useState([
+  const [tabs, setTabs] = useState([
     { id: 'profile', label: 'Profile' },
-    { id: 'appliedjobs', label: 'Applied Jobs' },
+    { id: 'pendingjobs', label: 'Pending Jobs' },
     { id: 'approvedjobs', label: 'Approved Jobs' },
     { id: 'accountsetting', label: 'Account Settings' },
   ]);
@@ -45,17 +43,21 @@ const SettingsPage = () => {
 
       const data = await response.json();
 
+      console.log('User Profile Data ->', data);
+
       setLoading(false);
       setAuthenticated(true);
       setUser(data.userData);
       setJobsPosted(data.postedData);
       setJobsApplied(data.appliedData);
-      console.log('User Data ->', data);
+
+      setPendingJobs(data.appliedData.filter((job) => !job.is_accepted));
+      setApprovedJobs(data.appliedData.filter((job) => job.is_accepted));
 
       setTabs([
         { id: 'profile', label: 'Profile' },
         ...(data.userData.role === "Employer" ? [{ id: 'postedjobs', label: 'Posted Jobs' }] : []),
-        { id: 'appliedjobs', label: 'Applied Jobs' },
+        { id: 'pendingjobs', label: 'Pending Jobs' },
         { id: 'approvedjobs', label: 'Approved Jobs' },
         { id: 'accountsetting', label: 'Account Settings' },
       ]);
@@ -69,12 +71,9 @@ const SettingsPage = () => {
 
   useEffect(() => {
     fetchUser();
-    
   }, []);
 
-
   if (!localStorage.getItem("authToken")) return <NotFoundPage />;
-
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -84,8 +83,10 @@ const SettingsPage = () => {
         return <ProfileSettings user={user} fetchUser={fetchUser} />;
       case 'postedjobs':
         return <JobPostedShowingComponent jobsPosted={jobsPosted} />;
-      case 'appliedjobs':
-        return <JobAppliedShowingComponent jobsApplied={jobsApplied} />;
+      case 'pendingjobs':
+        return <JobAppliedShowingComponent jobs={pendingJobs} reason='Pending' />;
+      case 'approvedjobs':
+        return <JobAppliedShowingComponent jobs={approvedJobs} reason='Approved' />;
       case 'notifications':
         return <NotificationSettings />;
       case 'preferences':

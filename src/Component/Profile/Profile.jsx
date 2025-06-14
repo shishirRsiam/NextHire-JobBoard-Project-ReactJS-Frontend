@@ -21,8 +21,6 @@ const ProfilePage = ({loading, user, jobsApplied, postedData}) => {
             }
         
             const data = await response.json();
-
-            console.log('User Profile Data ->', data);
         
             // setUser(data.userData);
             // setJobsApplied(data.appliedData);

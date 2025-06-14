@@ -23,10 +23,8 @@ const ViewApplication = () => {
                     }
                 });
                 const data = await response.json();
-                console.log('fetchApplications ->', data);
                 setJobPost(data.job_post);
                 setApplications(data.application);
-                // setApplications(data.applications);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -38,7 +36,6 @@ const ViewApplication = () => {
             top: 0,
             behavior: "smooth",
         });
-        console.log(jobId);
     }, [])
 
     if (loading) return <LoadingPage />

@@ -46,7 +46,7 @@ const EditProfileModal = ({ isOpen, toggleModal, user }) => {
       if (!response.ok) {
         console.error("Failed to update user data");
       }
-      SuccessSwalAlert({ text: 'Profile updated successfully.' , next_url: '/profile/'});
+      SuccessSwalAlert({ text: 'Profile updated successfully.' , next_url: '/dashboard/'});
     } catch (error) {
       console.error("Error updating user data:", error);
     }

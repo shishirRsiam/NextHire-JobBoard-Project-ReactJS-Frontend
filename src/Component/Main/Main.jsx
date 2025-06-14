@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
+import API from '../Authentication/API';
+import JobsShowingComponent from './JobsShowingComponent';
+import mockBlogs from '../Blog/BlogDataBase';
+import BlogComponent from '../Blog/BlogComponent';
+import Slideshow from '../Slideshow';
 
 
 const HomePage = () => {
-    const navigate = useNavigate();
-    console.log('HomePage');
-    console.log(localStorage.getItem('authToken'));
-
+    const [jobs, setJobs] = useState([]);
     const [authenticated, setAuthenticated] = useState(false);
 
     useEffect(() => {
-        if(localStorage.getItem('authToken')) {
+        if (localStorage.getItem('authToken')) {
             setAuthenticated(true);
         }
 
-        // Check auth token and navigate
-        // if (localStorage.getItem('authToken')) {
-        //     navigate('/feed/'); // Navigate programmatically without refresh
-        // }
+        const fetchJobs = async () => {
+            try {
+                const response = await fetch(`${API.AddPostAPI}`);
+                const data = await response.json();
+                setJobs(data.job_posts);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchJobs();
     }, []);
 
     return (
-        <div className="">
+        <motion.div className=""
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}>
+            <Slideshow />
+
             {/* Hero Section */}
             {!authenticated && <motion.section
                 className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-20"
@@ -41,6 +55,25 @@ const HomePage = () => {
                     </Link>
                 </div>
             </motion.section>}
+
+            < JobsShowingComponent jobs={jobs} />
+
+            {/* Blog Highlights Section */}
+            <motion.section
+                id="blog"
+                className="py-16 bg-gray-50"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1 }}>
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold mb-12">Blog Highlights</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {mockBlogs.slice(0, 6).map((blog) => (
+                            <BlogComponent key={blog.id} blog={blog} />
+                        ))}
+                    </div>
+                </div>
+            </motion.section>
 
             {/* Features Section */}
             <motion.section
@@ -103,8 +136,7 @@ const HomePage = () => {
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-12">How It Works</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <motion.div
-                            className="p-6"
+                        <motion.div className="p-6"
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
@@ -139,52 +171,7 @@ const HomePage = () => {
                 </div>
             </motion.section>
 
-            {/* Blog Highlights Section */}
-            <motion.section
-                id="blog"
-                className="py-16 bg-gray-50"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1 }}
-            >
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold mb-12">Blog Highlights</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <motion.div
-                            className="bg-white shadow-lg rounded-lg p-6"
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 1.2 }}
-                        >
-                            <h3 className="text-xl font-bold mb-4">5 Tips for Writing a Winning Resume</h3>
-                            <p>Learn how to create a resume that stands out and gets noticed.</p>
-                            <Link to="/blog/resume-tips" className="text-blue-500 hover:underline">Read More</Link>
-                        </motion.div>
 
-                        <motion.div
-                            className="bg-white shadow-lg rounded-lg p-6"
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 1.4 }}
-                        >
-                            <h3 className="text-xl font-bold mb-4">Top Interview Questions in 2025</h3>
-                            <p>Prepare for your next interview with our expert tips and questions.</p>
-                            <Link to="/blog/interview-questions" className="text-blue-500 hover:underline">Read More</Link>
-                        </motion.div>
-
-                        <motion.div
-                            className="bg-white shadow-lg rounded-lg p-6"
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 1.6 }}
-                        >
-                            <h3 className="text-xl font-bold mb-4">The Future of Remote Work</h3>
-                            <p>Explore how remote work is evolving and what it means for you.</p>
-                            <Link to="/blog/remote-work" className="text-blue-500 hover:underline">Read More</Link>
-                        </motion.div>
-                    </div>
-                </div>
-            </motion.section>
 
             {/* Call to Action */}
             {!authenticated && <motion.section
@@ -202,7 +189,7 @@ const HomePage = () => {
                     </Link>
                 </div>
             </motion.section>}
-        </div>
+        </motion.div>
     );
 };
 

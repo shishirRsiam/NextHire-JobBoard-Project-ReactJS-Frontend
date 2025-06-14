@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from 'tw-elements-react';
 import ErrorSwalAlert from "../SwalAlert/ErrorSwalAlert";
 import SuccessSwalAlert from "../SwalAlert/SuccessSwalAlert";
 import ProccessingSwalAlert from "../SwalAlert/ProccessigSwalAlert";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    first_name: '', last_name: '', username: '', email: '', 
+    first_name: '', last_name: '', username: '', email: '',
     password: '', confirm_password: '', role: 'Job Seeker', company_name: '',
     terms_conditions: true,
   });
@@ -47,12 +50,6 @@ const RegisterForm = () => {
     if (!formData.terms_conditions)
       errors.terms_conditions = "You must agree to the terms and conditions";
 
-    // Optional: Validation for company_name based on role
-    if (formData.role === "Employer" && !formData.company_name)
-      errors.company_name = "Company name is required for Employers";
-    if (formData.role === "Job Seeker" && !formData.resume)
-      errors.resume = "Resume is required for Employers";
-
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -60,26 +57,26 @@ const RegisterForm = () => {
 
   const FetchAPI = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/register/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
+      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-          SuccessSwalAlert({ title: data.title, text: data.message , next_url: '/login/' });
-        }
-        else {
-          ErrorSwalAlert({ title: data.title, text: data.message });
-        }
+      if (response.ok) {
+        SuccessSwalAlert({ title: data.title, text: data.message, next_url: '/login/' });
+      }
+      else {
+        ErrorSwalAlert({ title: data.title, text: data.message });
+      }
     } catch (error) {
-        // ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form' });
+      ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form' });
     }
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,15 +86,26 @@ const RegisterForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem('authToken')) {
+      navigate('/');
+    }
+  }, []);
+
   return (
-    <div className="max-w-6xl border mx-auto bg-white shadow-lg rounded-3xl p-8 pb-5 my-10">
-      <h2 className="text-3xl font-semibold text-indigo-600 text-center mb-6">
+    <motion.div className="max-w-6xl border mx-auto bg-white shadow-lg rounded-3xl p-8 pb-5 my-10"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}>
+      <h2 className="text-3xl font-bold text-indigo-600 text-center mb-6">
         Create Your NextHire Account
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Username and Email */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-6" initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}>
           <div>
             <label className="block text-sm font-medium text-gray-700">First Name</label>
             <input
@@ -152,10 +160,12 @@ const RegisterForm = () => {
               <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Password and Confirm Password */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-6" initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}>
           <div>
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
@@ -182,7 +192,7 @@ const RegisterForm = () => {
               <p className="text-red-500 text-sm mt-1">{formErrors.confirm_password}</p>
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Role and Company Name */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -223,12 +233,12 @@ const RegisterForm = () => {
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
           Already have an account?{' '}
-          <a href="/login/" className="text-purple-500 hover:text-purple-700">
+          <Link to="/login/" className="text-purple-500 hover:text-purple-700">
             Login
-          </a>
+          </Link>
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

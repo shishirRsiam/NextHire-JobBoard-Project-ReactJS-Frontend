@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { TEInput, TERipple } from 'tw-elements-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import API from './API';
 
 import ErrorSwalAlert from '../SwalAlert/ErrorSwalAlert';
@@ -9,8 +9,9 @@ import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: 'shishir', password: '123456',
+    username: 'shishir', password: '',
   });
 
   const handleChange = (e) => {
@@ -41,7 +42,7 @@ const LoginPage = () => {
       if (response.ok) {
         localStorage.setItem('authToken', result.token);
         localStorage.setItem('user', JSON.stringify(result.user));
-        SuccessSwalAlert({ title: result.title, text: result.message , next_url: '/profile/' });
+        SuccessSwalAlert({ title: result.title, text: result.message, next_url: '/dashboard/' });
       } else {
         ErrorSwalAlert({ title: result.title, text: result.message });
       }
@@ -49,6 +50,20 @@ const LoginPage = () => {
       SuccessSwalAlert({ title: 'Error', text: error.message });
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('authToken')) {
+      navigate('/');
+    }
+    scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }, []);
+
+  if (localStorage.getItem('authToken')) {
+    return null;
+  }
 
   return (
     <section className="h-screen bg-gray-100">
@@ -66,14 +81,13 @@ const LoginPage = () => {
             <h2 className="text-center text-3xl font-bold text-purple-600 mb-6">Welcome Back!</h2>
             <form onSubmit={handleSubmit}>
               <TEInput
-                required type="text" label="Username or Email address" size="lg"
+                required type="text" label="Username" size="lg"
                 name="username" value={formData.email} onChange={handleChange}
                 className="mb-6 w-full rounded-lg border-pink-300 focus:border-purple-400"
               />
 
               {/* Password input */}
-              <TEInput
-                required
+              <TEInput required
                 type="password"
                 label="Password"
                 name="password"
@@ -82,7 +96,7 @@ const LoginPage = () => {
                 size="lg"
                 className="mb-6 w-full rounded-lg border-pink-300 focus:border-purple-400"
               />
-              
+
 
               {/* Remember me checkbox */}
               <div className="flex items-center justify-between mb-6">
@@ -103,10 +117,7 @@ const LoginPage = () => {
               </div>
 
               <TERipple rippleColor="light" className="w-full">
-                <button
-                  type="submit"
-                  className="w-full py-3 px-6 bg-purple-500 text-white text-sm font-medium uppercase rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                >
+                <button type="submit" className="w-full py-3 px-6 bg-purple-500 text-white text-sm font-medium uppercase rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-600">
                   Login
                 </button>
               </TERipple>
@@ -114,9 +125,9 @@ const LoginPage = () => {
             <div className="text-center mt-4">
               <p className="text-sm text-gray-600">
                 Don't have an account?{' '}
-                <a href="/register" className="text-purple-500 hover:text-purple-700">
+                <Link to="/register" className="text-purple-500 hover:text-purple-700">
                   Sign Up
-                </a>
+                </Link>
               </p>
             </div>
           </div>

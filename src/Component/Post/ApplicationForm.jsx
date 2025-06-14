@@ -32,7 +32,7 @@ const ApplicationForm = ({ handleCloseModal, isModalOpen, jobId }) => {
             SuccessSwalAlert({
                 title: data.title,
                 text: data.message,
-                next_url: '/profile/',
+                next_url: '/dashboard/',
             });
 
         } catch (error) {

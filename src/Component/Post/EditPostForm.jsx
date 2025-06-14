@@ -58,7 +58,7 @@ const EditPostForm = () => {
 
       const data = await response.json();
 
-      SuccessSwalAlert({ title: 'Success', text: 'Job updated successfully.', next_url: '/profile/' });
+      SuccessSwalAlert({ title: 'Success', text: 'Job updated successfully.', next_url: '/dashboard/' });
     } catch (error) {
       console.error("Error submitting form:", error);
       ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form' });

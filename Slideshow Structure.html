@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS Slideshow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 flex justify-center items-center h-screen">
+
+    <div class="relative w-full max-w-2xl">
+        <!-- Slides -->
+        <div class="relative overflow-hidden rounded-lg">
+            <div class="slides">
+                <img src="https://source.unsplash.com/800x500/?nature" class="slide w-full hidden">
+                <img src="https://source.unsplash.com/800x500/?mountain" class="slide w-full hidden">
+                <img src="https://source.unsplash.com/800x500/?water" class="slide w-full hidden">
+            </div>
+        </div>
+
+        <!-- Previous & Next Buttons -->
+        <button id="prev"
+            class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-full">❮</button>
+        <button id="next"
+            class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-2 rounded-full">❯</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.add("hidden"));
+            slides[index].classList.remove("hidden");
+        }
+
+        document.getElementById("next").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        showSlide(currentIndex); // Initialize first slide
+    </script>
+
+</body>
+
+</html>

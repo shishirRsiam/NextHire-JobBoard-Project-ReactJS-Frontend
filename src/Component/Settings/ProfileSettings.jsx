@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 import { toast } from 'react-toastify';
 import AccountSettings from './AccountSettings';
-import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
 
 const ProfileSettings = ({ user, fetchUser }) => {
     const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ const ProfileSettings = ({ user, fetchUser }) => {
 
     const [isEditable, setIsEditable] = useState(false);
 
+    // Handle input change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -22,6 +22,7 @@ const ProfileSettings = ({ user, fetchUser }) => {
         }));
     };
 
+    // Toggle readonly state
     const toggleEditable = () => {
         setIsEditable((prev) => !prev);
         if (!isEditable) {
@@ -32,9 +33,9 @@ const ProfileSettings = ({ user, fetchUser }) => {
     };
 
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        ProccessingSwalAlert()
         const fetchUpdatedUserData = async () => {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/update/profile/", {
@@ -65,7 +66,7 @@ const ProfileSettings = ({ user, fetchUser }) => {
     return (
         <motion.div initial={{ x: 50 }} animate={{ x: 0 }} transition={{ duration: 0.5 }}>
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Account Settings</h2>
+                <h2 className="text-2xl font-bold">Profile Settings</h2>
                 <button onClick={toggleEditable} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
                     {!isEditable ? 'Want to Edit Your Profile?' : 'Cancel'}
                 </button>
@@ -112,7 +113,8 @@ const ProfileSettings = ({ user, fetchUser }) => {
                         />
                     </div>
                 </div>
-                <button type="submit" className={`bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 ${!isEditable && 'opacity-50 pointer-events-none'
+                <button type="submit"
+                    className={`bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 ${!isEditable && 'opacity-50 pointer-events-none'
                         }`}
                     disabled={!isEditable}>
                     Update Profile

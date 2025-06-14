@@ -7,11 +7,9 @@ import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 
 const ViewJobsApplication = ({ jobPost, applications, setApplications }) => {
     const acceptApplication = async (applicationId) => {
-        console.log('acceptApplication ->', applicationId);
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/post/${jobPost.id}/?is_accept=${applicationId}`);
             const data = await response.json();
-            console.log('handleAcceptApplication ->', data);
         } catch (error) {
             console.error("Error fetching data:", error);
         }

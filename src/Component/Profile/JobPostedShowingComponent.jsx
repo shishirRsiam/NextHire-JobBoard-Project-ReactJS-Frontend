@@ -14,7 +14,7 @@ const JobPostedShowingComponent = ({ jobsPosted }) => {
             if (!response.ok) {
                 throw new Error('Something went wrong!');
             }
-            SuccessSwalAlert({ title: data.title, text: data.message, next_url: '/profile/' });
+            SuccessSwalAlert({ title: data.title, text: data.message, next_url: '/dashboard/' });
         } catch (error) {
             console.error("Error fetching job:", error);
         }
@@ -61,30 +61,32 @@ const JobPostedShowingComponent = ({ jobsPosted }) => {
                                 initial={{ x: -100 }}
                                 animate={{ x: 0 }}
                                 transition={{ type: "spring", stiffness: 100 }}>
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800">{job.title}</h3>
+                                <div className="flex-1">
+                                    <h3 className="text-xl font-semibold text-gray-800">{job.title}</h3>
                                     <p className="text-sm text-gray-600">Salary: {job.salary} </p>
                                     <p className="text-sm text-gray-600">Company: {job.company} </p>
                                     <p className="text-sm text-gray-600"> Location: {job.location} </p>
                                     <p className="text-xs text-gray-500 mt-1">Applied on: {new Date(job.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} - {new Date(job.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
                                 </div>
-                                <div className="flex gap-4">
+
+                                <div className="flex-1 gap-1 flex justify-end text-lg">
                                     <Link to={{
-                                        pathname: "/edit/job/", }} state={{ existingJob: job }}
-                                        className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
+                                        pathname: "/edit/job/",
+                                    }} state={{ existingJob: job }}
+                                        className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-200">
                                         Edit
                                     </Link>
                                     <button onClick={() => handleDeleteJob(job)}
-                                        className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-200">
+                                        className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-200">
                                         Delete
                                     </button>
                                     <Link to={`/job/${job.id + 1552004}/applications`}
-                                        className="bg-orange-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-orange-600 transition duration-200">
-                                        Application
+                                        className="bg-orange-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition duration-200">
+                                        View Applied
                                     </Link>
 
-                                    <Link to={`/job/${job.id + 1552004}/`} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200">
-                                        Details
+                                    <Link to={`/job/${job.id + 1552004}/`} className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200">
+                                        Job Details
                                     </Link>
                                 </div>
                             </motion.div>

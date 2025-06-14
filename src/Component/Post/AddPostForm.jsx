@@ -73,7 +73,7 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       const data = await response.json();
 
       if (onSubmit) onSubmit(formData);
-      SuccessSwalAlert({ title: 'Success', text: 'Job posted successfully.', next_url: '/profile/' });
+      SuccessSwalAlert({ title: 'Success', text: 'Job posted successfully.', next_url: '/dashboard/' });
     } catch (error) {
       console.error("Error submitting form:", error);
       ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form'});

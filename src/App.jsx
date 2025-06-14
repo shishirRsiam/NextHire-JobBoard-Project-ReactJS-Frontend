@@ -12,7 +12,6 @@ import RegisterPage from './Component/Authentication/Register';
 import NotFoundPage from './Component/Authentication/NotFoundPage';
 import ActivationPage from './Component/Authentication/AccountActivation';
 import ProfilePage from './Component/Profile/Profile';
-import LoadingPage from './Component/Authentication/LoadingPage';
 import JobFeed from './Component/Post/JobFeed';
 import JobDetails from './Component/Post/JobDetails';
 import AddPostForm from './Component/Post/AddPostForm';

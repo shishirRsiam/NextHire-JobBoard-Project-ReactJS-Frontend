@@ -57,9 +57,7 @@ const ResetPassword = () => {
         // Call the function
         updatePassword();
 
-
         setError("");
-        console.log("New password submitted:", password);
     };
 
     return (
